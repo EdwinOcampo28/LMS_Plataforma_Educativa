@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Docentes</title>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<h1>Gestión de Docentes</h1>
+
+<form id="docenteForm">
+
+<input id="codigo" placeholder="Código">
+<input id="nombres" placeholder="Nombres">
+<input id="apellidos" placeholder="Apellidos">
+<input id="email" placeholder="Email">
+<input id="area" placeholder="Área académica">
+
+<button>Guardar</button>
+
+</form>
+
+<input id="buscar" placeholder="Buscar docente">
+
+<table>
+
+<thead>
+<tr>
+<th>Código</th>
+<th>Nombre</th>
+<th>Email</th>
+<th>Área</th>
+<th>Acciones</th>
+</tr>
+</thead>
+
+<tbody id="tablaDocentes"></tbody>
+
+</table>
+
+<script src="../js/docentes.js"></script>
+
+</body>
+</html>
