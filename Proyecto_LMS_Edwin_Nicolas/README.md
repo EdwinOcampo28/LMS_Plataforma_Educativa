@@ -1,28 +1,60 @@
+# Plataforma LMS Educativa
 
-# LMS Educativo ABC
+## Descripción
 
-Proyecto LMS desarrollado con:
+Sistema web para la gestión de cursos, docentes y contenidos educativos.
 
-HTML
-CSS
-JavaScript
-LocalStorage
+Permite administrar cursos, asignar docentes y organizar módulos de aprendizaje.
+
+---
+
+## Tecnologías utilizadas
+
+* HTML5
+* CSS3
+* JavaScript
+* LocalStorage
+
+---
 
 ## Funcionalidades
 
-Login administrativo
-Dashboard con estadísticas
-CRUD docentes
-CRUD cursos
-Módulos dentro de cursos
-Lecciones dentro de módulos
-Vista pública de cursos
-Buscador de docentes
+### Login
 
-## Cómo ejecutar
+Sistema de autenticación de administradores.
 
-Abrir index.html en el navegador.
+### Dashboard
 
-Crear administrativo primero desde:
+Visualización de estadísticas:
 
-pages/administrativos.html
+* número de cursos
+* número de docentes
+
+### Gestión de Cursos
+
+* creación de cursos
+* asignación de docentes
+* categorización
+* visibilidad pública o privada
+
+### Gestión de Docentes
+
+* registro de docentes
+* asignación de cursos
+
+### Lecciones
+
+* creación de módulos
+* subida de contenidos
+
+---
+
+## Cómo ejecutar el proyecto
+
+1. Descargar el repositorio
+2. Abrir `index.html` en el navegador
+
+---
+
+## Autor
+Edwin y Nicolas
