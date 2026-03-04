@@ -1,4 +1,3 @@
-
 let cursos = JSON.parse(localStorage.getItem("cursos")) || []
 
 const tabla = document.getElementById("tablaCursos")
@@ -15,11 +14,18 @@ cursoForm.addEventListener("submit", e => {
         nombre: nombre.value,
         descripcion: descripcion.value,
         docente: docente.value,
+
+        duracion: duracion.value,
+        etiquetas: etiquetas.value,
+        estado: estado.value,
+
         modulos: []
 
     })
 
     guardar()
+
+    cursoForm.reset()
 
 })
 
@@ -39,6 +45,8 @@ moduloForm.addEventListener("submit", e => {
     })
 
     guardar()
+
+    moduloForm.reset()
 
 })
 
@@ -63,11 +71,25 @@ leccionForm.addEventListener("submit", e => {
 
     guardar()
 
+    leccionForm.reset()
+
 })
 
 function eliminar(i) {
 
     cursos.splice(i, 1)
+
+    guardar()
+
+}
+
+function cambiarEstado(i) {
+
+    if (cursos[i].estado === "Activo") {
+        cursos[i].estado = "Inactivo"
+    } else {
+        cursos[i].estado = "Activo"
+    }
 
     guardar()
 
@@ -93,6 +115,9 @@ function render() {
 <td>${c.codigo}</td>
 <td>${c.nombre}</td>
 <td>${c.docente}</td>
+<td>${c.duracion}</td>
+<td>${c.etiquetas}</td>
+<td>${c.estado}</td>
 <td>
 <button onclick="eliminar(${i})">Eliminar</button>
 </td>
