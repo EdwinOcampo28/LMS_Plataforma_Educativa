@@ -6,255 +6,256 @@
 /* =========================
    VARIABLES
 ========================= */
-:root{
-  --primary:#2563eb;
-  --primary-dark:#1e40af;
-  --accent:#7c3aed;
-  --bg:#f8fafc;
-  --sidebar:#0f172a;
-  --sidebar-hover:#1e293b;
-  --card:#ffffff;
-  --border:#e5e7eb;
-  --text:#0f172a;
-  --muted:#64748b;
-  --shadow:0 10px 30px rgba(0,0,0,0.05);
-  --radius:12px;
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --accent: #7c3aed;
+  --bg: #f8fafc;
+  --sidebar: #0f172a;
+  --sidebar-hover: #1e293b;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --text: #0f172a;
+  --muted: #64748b;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --radius: 12px;
 }
 
 /* =========================
    RESET GENERAL
 ========================= */
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  font-family:'Inter', sans-serif;
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
 }
 
 /* =========================
    LOGIN CENTER
 ========================= */
-.center{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  background:linear-gradient(135deg,#2563eb,#7c3aed);
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
 }
 
-.login{
-  width:340px;
+.login {
+  width: 340px;
 }
 
 /* =========================
    TARJETAS
 ========================= */
-.card{
-  background:var(--card);
-  padding:30px;
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  transition:0.3s ease;
+.card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: 0.3s ease;
 }
 
-.card:hover{
-  transform:translateY(-4px);
+.card:hover {
+  transform: translateY(-4px);
 }
 
 /* =========================
    INPUTS
 ========================= */
-input{
-  display:block;
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border:1px solid var(--border);
-  border-radius:8px;
-  font-size:14px;
-  transition:0.2s;
+input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.2s;
 }
 
-input:focus{
-  outline:none;
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(37,99,235,0.1);
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 /* =========================
    BOTONES
 ========================= */
-button{
-  background:var(--primary);
-  color:white;
-  border:none;
-  padding:12px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:600;
-  transition:0.2s;
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
 }
 
-button:hover{
-  background:var(--primary-dark);
-  transform:translateY(-2px);
+button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
 }
 
 /* =========================
    LAYOUT PRINCIPAL
 ========================= */
-.layout{
-  display:flex;
+.layout {
+  display: flex;
 }
 
 /* =========================
    SIDEBAR
 ========================= */
-.sidebar{
-  width:240px;
-  background:var(--sidebar);
-  color:white;
-  height:100vh;
-  padding:30px 20px;
+.sidebar {
+  width: 240px;
+  background: var(--sidebar);
+  color: white;
+  height: 100vh;
+  padding: 30px 20px;
 }
 
-.sidebar h2{
-  margin-top:0;
-  font-weight:600;
+.sidebar h2 {
+  margin-top: 0;
+  font-weight: 600;
 }
 
-.sidebar a{
-  display:block;
-  color:white;
-  margin:12px 0;
-  text-decoration:none;
-  padding:8px 10px;
-  border-radius:8px;
-  transition:0.2s;
+.sidebar a {
+  display: block;
+  color: white;
+  margin: 12px 0;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: 0.2s;
 }
 
-.sidebar a:hover{
-  background:var(--sidebar-hover);
+.sidebar a:hover {
+  background: var(--sidebar-hover);
 }
 
 /* =========================
    CONTENIDO
 ========================= */
-.content{
-  flex:1;
-  padding:40px;
+.content {
+  flex: 1;
+  padding: 40px;
 }
 
 /* =========================
    GRID DASHBOARD
 ========================= */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:25px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
 }
 
-.stat{
-  text-align:center;
-  font-size:28px;
-  font-weight:700;
-  color:var(--primary);
+.stat {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
 }
 
 /* =========================
    ACCIONES RAPIDAS
 ========================= */
-.quick{
-  display:flex;
-  gap:20px;
-  margin-top:25px;
-  flex-wrap:wrap;
+.quick {
+  display: flex;
+  gap: 20px;
+  margin-top: 25px;
+  flex-wrap: wrap;
 }
 
-.quickCard{
-  background:var(--card);
-  padding:25px;
-  border-radius:var(--radius);
-  text-decoration:none;
-  color:var(--text);
-  box-shadow:var(--shadow);
-  transition:0.3s ease;
-  flex:1;
-  min-width:200px;
+.quickCard {
+  background: var(--card);
+  padding: 25px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: 0.3s ease;
+  flex: 1;
+  min-width: 200px;
 }
 
-.quickCard:hover{
-  transform:translateY(-5px);
+.quickCard:hover {
+  transform: translateY(-5px);
 }
 
 /* =========================
    TABLAS
 ========================= */
-table{
-  width:100%;
-  margin-top:25px;
-  border-collapse:collapse;
-  background:var(--card);
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:var(--shadow);
+table {
+  width: 100%;
+  margin-top: 25px;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
-th{
-  background:#f1f5f9;
-  font-weight:600;
+th {
+  background: #f1f5f9;
+  font-weight: 600;
 }
 
-th,td{
-  padding:14px;
-  border-bottom:1px solid var(--border);
-  text-align:left;
+th,
+td {
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
 }
 
-tr:hover{
-  background:#f8fafc;
+tr:hover {
+  background: #f8fafc;
 }
 
 /* =========================
    MENSAJES
 ========================= */
-.hint{
-  font-size:13px;
-  color:var(--muted);
+.hint {
+  font-size: 13px;
+  color: var(--muted);
 }
 
 /* =========================
    TARJETAS DE CURSOS
 ========================= */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
 }
 
-.card h3{
-  margin:0 0 15px 0;
-  font-weight:600;
+.card h3 {
+  margin: 0 0 15px 0;
+  font-weight: 600;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
-@media(max-width:768px){
-  .layout{
-    flex-direction:column;
+@media(max-width:768px) {
+  .layout {
+    flex-direction: column;
   }
 
-  .sidebar{
-    width:100%;
-    height:auto;
+  .sidebar {
+    width: 100%;
+    height: auto;
   }
 
-  .content{
-    padding:20px;
+  .content {
+    padding: 20px;
   }
 }
