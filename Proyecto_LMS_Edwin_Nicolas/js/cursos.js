@@ -112,12 +112,14 @@ function render() {
     })
 }
 
-// ================= MÓDULOS =================
+// ================= MODULOS =================
 
 const moduloForm = document.getElementById("moduloForm")
 const cursoModulo = document.getElementById("cursoModulo")
 const moduloNombre = document.getElementById("moduloNombre")
 const tablaModulos = document.getElementById("tablaModulos")
+
+let editandoModuloIndex = null
 
 moduloForm.addEventListener("submit", e => {
 
@@ -136,7 +138,12 @@ moduloForm.addEventListener("submit", e => {
         nombre: moduloNombre.value
     }
 
-    modulos.push(nuevoModulo)
+    if (editandoModuloIndex !== null) {
+        modulos[editandoModuloIndex] = nuevoModulo
+        editandoModuloIndex = null
+    } else {
+        modulos.push(nuevoModulo)
+    }
 
     localStorage.setItem("modulos", JSON.stringify(modulos))
     moduloForm.reset()
@@ -150,6 +157,7 @@ function renderModulos() {
     tablaModulos.innerHTML = ""
 
     modulos.forEach((m, i) => {
+
         tablaModulos.innerHTML += `
         <tr>
             <td>${m.cursoNombre}</td>
@@ -161,6 +169,16 @@ function renderModulos() {
         </tr>
         `
     })
+}
+
+function editarModulo(i) {
+
+    const modulo = modulos[i]
+
+    cursoModulo.value = modulo.cursoCodigo
+    moduloNombre.value = modulo.nombre
+
+    editandoModuloIndex = i
 }
 
 function eliminarModulo(i) {
@@ -178,19 +196,6 @@ function eliminarModulo(i) {
     }
 
     modulos.splice(i, 1)
-
-    localStorage.setItem("modulos", JSON.stringify(modulos))
-
-    renderModulos()
-}
-
-function editarModulo(i) {
-
-    const nuevoNombre = prompt("Editar nombre del módulo:", modulos[i].nombre)
-
-    if (!nuevoNombre) return
-
-    modulos[i].nombre = nuevoNombre
 
     localStorage.setItem("modulos", JSON.stringify(modulos))
 
@@ -251,6 +256,7 @@ function renderLecciones() {
     tablaLecciones.innerHTML = ""
 
     lecciones.forEach((l, i) => {
+
         tablaLecciones.innerHTML += `
         <tr>
             <td>${l.cursoNombre}</td>
