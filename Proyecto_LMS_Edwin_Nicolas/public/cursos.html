@@ -1,18 +1,128 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<title>Cursos Disponibles</title>
-<link rel="stylesheet" href="../css/styles.css">
+    <meta charset="UTF-8">
+    <title>Gestión de Cursos</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
+
 <body>
 
-<h1>Cursos Disponibles</h1>
+    <h1>Gestión de Cursos</h1>
 
-<div id="listaCursos" class="grid"></div>
+    <!-- BUSCADOR -->
+    <input type="text" id="buscarCurso" placeholder="Buscar curso...">
 
-<script src="../js/publicCursos.js"></script>
+    <!-- ================= CURSOS ================= -->
+
+    <h2>Crear / Editar Curso</h2>
+
+    <form id="cursoForm">
+
+        <input id="codigo" placeholder="Código">
+        <input id="nombre" placeholder="Nombre">
+        <input id="descripcion" placeholder="Descripción">
+        <input id="docente" placeholder="Código docente">
+
+        <input id="duracion" placeholder="Duración (ej: 10 horas)">
+        <input id="etiquetas" placeholder="Etiquetas (Python, Backend)">
+        <input id="categoria" placeholder="Categoría (Programación, Diseño)">
+
+        <select id="estado">
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
+
+        <button type="submit">Guardar Curso</button>
+
+    </form>
+
+    <h3>Listado de Cursos</h3>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Docente</th>
+                <th>Duración</th>
+                <th>Etiquetas</th>
+                <th>Estado</th>
+                <th>Módulos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablaCursos"></tbody>
+
+    </table>
+
+    <!-- ================= MODULOS ================= -->
+
+    <h2>Gestión de Módulos</h2>
+
+    <form id="moduloForm">
+
+        <input id="cursoModulo" placeholder="Código curso">
+        <input id="moduloNombre" placeholder="Nombre módulo">
+
+        <button type="submit">Agregar módulo</button>
+
+    </form>
+
+    <h3>Listado General de Módulos</h3>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Módulo</th>
+                <th>Lecciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablaModulos"></tbody>
+
+    </table>
+
+    <!-- ================= LECCIONES ================= -->
+
+    <h2>Gestión de Lecciones</h2>
+
+    <form id="leccionForm">
+
+        <input id="cursoLeccion" placeholder="Código curso">
+        <input id="moduloLeccion" placeholder="Nombre módulo">
+        <input id="titulo" placeholder="Título">
+        <input id="contenido" placeholder="Contenido">
+
+        <button type="submit">Agregar lección</button>
+
+    </form>
+
+    <h3>Listado de Lecciones</h3>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Módulo</th>
+                <th>Título</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablaLecciones"></tbody>
+
+    </table>
+
+    <script src="../js/cursos.js"></script>
 
 </body>
+
 </html>
