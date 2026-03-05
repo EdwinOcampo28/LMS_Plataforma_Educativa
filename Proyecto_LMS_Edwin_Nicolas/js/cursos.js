@@ -26,7 +26,7 @@ cursoForm.addEventListener("submit", e => {
     const docentes = JSON.parse(localStorage.getItem("docentes")) || []
     const docenteExiste = docentes.find(d => d.codigo === docente.value)
 
-    if(!docenteExiste){
+    if (!docenteExiste) {
         alert("El código del docente no existe.")
         return
     }
@@ -42,7 +42,7 @@ cursoForm.addEventListener("submit", e => {
         estado: estado.value
     }
 
-    if(editandoIndex !== null){
+    if (editandoIndex !== null) {
         cursos[editandoIndex] = nuevoCurso
         editandoIndex = null
     } else {
@@ -53,46 +53,48 @@ cursoForm.addEventListener("submit", e => {
     cursoForm.reset()
 })
 
-function guardarCursos(){
+function guardarCursos() {
     localStorage.setItem("cursos", JSON.stringify(cursos))
     render()
 }
 
-function eliminarCurso(i){
+function eliminarCurso(i) {
 
     const cursoCodigo = cursos[i].codigo
 
     const tieneModulos = modulos.some(m => m.cursoCodigo === cursoCodigo)
     const tieneLecciones = lecciones.some(l => l.cursoCodigo === cursoCodigo)
 
-    if(tieneModulos || tieneLecciones){
+    if (tieneModulos || tieneLecciones) {
         alert("No se puede eliminar el curso porque tiene módulos o lecciones.")
         return
     }
 
-    cursos.splice(i,1)
+    cursos.splice(i, 1)
     guardarCursos()
 }
 
-function editarCurso(i){
+function editarCurso(i) {
 
-    const c = cursos[i]
+    const curso = cursos[i]
 
-    codigo.value = c.codigo
-    nombre.value = c.nombre
-    descripcion.value = c.descripcion
-    docente.value = c.docenteCodigo
-    duracion.value = c.duracion
-    etiquetas.value = c.etiquetas
-    estado.value = c.estado
+    codigo.value = curso.codigo
+    nombre.value = curso.nombre
+    descripcion.value = curso.descripcion
+    docente.value = curso.docenteCodigo
+    duracion.value = curso.duracion
+    etiquetas.value = curso.etiquetas
+    estado.value = curso.estado
 
     editandoIndex = i
 }
 
-function render(){
+function render() {
+
     tabla.innerHTML = ""
 
-    cursos.forEach((c,i)=>{
+    cursos.forEach((c, i) => {
+
         tabla.innerHTML += `
         <tr>
             <td>${c.codigo}</td>
@@ -123,7 +125,7 @@ moduloForm.addEventListener("submit", e => {
 
     const cursoExiste = cursos.find(c => c.codigo === cursoModulo.value)
 
-    if(!cursoExiste){
+    if (!cursoExiste) {
         alert("No existe un curso con ese código.")
         return
     }
@@ -141,18 +143,19 @@ moduloForm.addEventListener("submit", e => {
     renderModulos()
 })
 
-function renderModulos(){
+function renderModulos() {
 
-    if(!tablaModulos) return
+    if (!tablaModulos) return
 
     tablaModulos.innerHTML = ""
 
-    modulos.forEach((m,i)=>{
+    modulos.forEach((m, i) => {
         tablaModulos.innerHTML += `
         <tr>
             <td>${m.cursoNombre}</td>
             <td>${m.nombre}</td>
             <td>
+                <button onclick="editarModulo(${i})">Editar</button>
                 <button onclick="eliminarModulo(${i})">Eliminar</button>
             </td>
         </tr>
@@ -160,7 +163,7 @@ function renderModulos(){
     })
 }
 
-function eliminarModulo(i){
+function eliminarModulo(i) {
 
     const modulo = modulos[i]
 
@@ -169,13 +172,28 @@ function eliminarModulo(i){
         l.moduloNombre === modulo.nombre
     )
 
-    if(tieneLecciones){
+    if (tieneLecciones) {
         alert("No se puede eliminar el módulo porque tiene lecciones.")
         return
     }
 
-    modulos.splice(i,1)
+    modulos.splice(i, 1)
+
     localStorage.setItem("modulos", JSON.stringify(modulos))
+
+    renderModulos()
+}
+
+function editarModulo(i) {
+
+    const nuevoNombre = prompt("Editar nombre del módulo:", modulos[i].nombre)
+
+    if (!nuevoNombre) return
+
+    modulos[i].nombre = nuevoNombre
+
+    localStorage.setItem("modulos", JSON.stringify(modulos))
+
     renderModulos()
 }
 
@@ -194,7 +212,7 @@ leccionForm.addEventListener("submit", e => {
 
     const cursoExiste = cursos.find(c => c.codigo === cursoLeccion.value)
 
-    if(!cursoExiste){
+    if (!cursoExiste) {
         alert("El curso no existe.")
         return
     }
@@ -204,7 +222,7 @@ leccionForm.addEventListener("submit", e => {
         m.nombre === moduloLeccion.value
     )
 
-    if(!moduloExiste){
+    if (!moduloExiste) {
         alert("El módulo no existe dentro de ese curso.")
         return
     }
@@ -220,17 +238,19 @@ leccionForm.addEventListener("submit", e => {
     lecciones.push(nuevaLeccion)
 
     localStorage.setItem("lecciones", JSON.stringify(lecciones))
+
     leccionForm.reset()
+
     renderLecciones()
 })
 
-function renderLecciones(){
+function renderLecciones() {
 
-    if(!tablaLecciones) return
+    if (!tablaLecciones) return
 
     tablaLecciones.innerHTML = ""
 
-    lecciones.forEach((l,i)=>{
+    lecciones.forEach((l, i) => {
         tablaLecciones.innerHTML += `
         <tr>
             <td>${l.cursoNombre}</td>
@@ -244,9 +264,12 @@ function renderLecciones(){
     })
 }
 
-function eliminarLeccion(i){
-    lecciones.splice(i,1)
+function eliminarLeccion(i) {
+
+    lecciones.splice(i, 1)
+
     localStorage.setItem("lecciones", JSON.stringify(lecciones))
+
     renderLecciones()
 }
 
