@@ -11,6 +11,8 @@
 
     <h1>Gestión de Cursos</h1>
 
+    <!-- ================= CURSOS ================= -->
+
     <form id="cursoForm">
 
         <input id="codigo" placeholder="Código">
@@ -26,7 +28,7 @@
             <option value="Inactivo">Inactivo</option>
         </select>
 
-        <button>Guardar Curso</button>
+        <button type="submit">Guardar Curso</button>
 
     </form>
 
@@ -48,6 +50,9 @@
 
     </table>
 
+
+    <!-- ================= MODULOS ================= -->
+
     <h2>Módulos</h2>
 
     <form id="moduloForm">
@@ -55,22 +60,28 @@
         <input id="cursoModulo" placeholder="Código curso">
         <input id="moduloNombre" placeholder="Nombre módulo">
 
-        <h3>Listado General de Módulos</h3>
-
-<table>
-<thead>
-<tr>
-<th>Curso</th>
-<th>Módulo</th>
-<th>Acciones</th>
-</tr>
-</thead>
-<tbody id="tablaModulos"></tbody>
-</table>
-
-        <button>Agregar módulo</button>
+        <button type="submit">Guardar módulo</button>
 
     </form>
+
+    <h3>Listado General de Módulos</h3>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Módulo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablaModulos"></tbody>
+
+    </table>
+
+
+    <!-- ================= LECCIONES ================= -->
 
     <h2>Lecciones</h2>
 
@@ -81,9 +92,26 @@
         <input id="titulo" placeholder="Título">
         <input id="contenido" placeholder="Contenido">
 
-        <button>Agregar lección</button>
+        <button type="submit">Agregar lección</button>
 
     </form>
+
+    <h3>Listado de Lecciones</h3>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Módulo</th>
+                <th>Título</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablaLecciones"></tbody>
+
+    </table>
 
     <script src="../js/cursos.js"></script>
 
