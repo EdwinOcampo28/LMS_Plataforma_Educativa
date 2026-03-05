@@ -10,18 +10,26 @@ const apellidos = document.getElementById("apellidos")
 const email = document.getElementById("email")
 const area = document.getElementById("area")
 
+let editandoIndex = null
+
 render()
 
 docenteForm.addEventListener("submit", e => {
-
     e.preventDefault()
 
-    docentes.push({
+    const nuevoDocente = {
         codigo: codigo.value,
         nombre: nombres.value + " " + apellidos.value,
         email: email.value,
         area: area.value
-    })
+    }
+
+    if(editandoIndex !== null){
+        docentes[editandoIndex] = nuevoDocente
+        editandoIndex = null
+    } else {
+        docentes.push(nuevoDocente)
+    }
 
     guardar()
     docenteForm.reset()
@@ -31,34 +39,61 @@ buscar.addEventListener("input", () => {
     render(buscar.value)
 })
 
-function guardar() {
+function guardar(){
     localStorage.setItem("docentes", JSON.stringify(docentes))
     render()
 }
 
-function eliminar(i) {
-    docentes.splice(i, 1)
+function eliminar(i){
+
+    const cursos = JSON.parse(localStorage.getItem("cursos")) || []
+
+    const docenteCodigo = docentes[i].codigo
+
+    const estaAsignado = cursos.some(c => c.docenteCodigo === docenteCodigo)
+
+    if(estaAsignado){
+        alert("No se puede eliminar este docente porque está asignado a un curso.")
+        return
+    }
+
+    docentes.splice(i,1)
     guardar()
 }
 
-function render(filtro = "") {
+function editar(i){
 
-    tabla.innerHTML = ""
+    const d = docentes[i]
+
+    codigo.value = d.codigo
+
+    const partes = d.nombre.split(" ")
+    nombres.value = partes[0] || ""
+    apellidos.value = partes.slice(1).join(" ") || ""
+
+    email.value = d.email
+    area.value = d.area
+
+    editandoIndex = i
+}
+
+function render(filtro=""){
+    tabla.innerHTML=""
 
     docentes
-        .filter(d => d.nombre.toLowerCase().includes(filtro.toLowerCase()))
-        .forEach((d, i) => {
-
-            tabla.innerHTML += `
-            <tr>
-                <td>${d.codigo}</td>
-                <td>${d.nombre}</td>
-                <td>${d.email}</td>
-                <td>${d.area}</td>
-                <td>
-                    <button onclick="eliminar(${i})">Eliminar</button>
-                </td>
-            </tr>
-            `
-        })
+    .filter(d=>d.nombre.toLowerCase().includes(filtro.toLowerCase()))
+    .forEach((d,i)=>{
+        tabla.innerHTML+=`
+        <tr>
+            <td>${d.codigo}</td>
+            <td>${d.nombre}</td>
+            <td>${d.email}</td>
+            <td>${d.area}</td>
+            <td>
+                <button onclick="editar(${i})">Editar</button>
+                <button onclick="eliminar(${i})">Eliminar</button>
+            </td>
+        </tr>
+        `
+    })
 }
