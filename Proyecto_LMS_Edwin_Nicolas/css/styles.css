@@ -192,9 +192,9 @@ button:hover {
 }
 
 /* =========================
-   TABLAS
+   TABLAS LIMPIAS CURSOS / MÓDULOS / LECCIONES
 ========================= */
-table {
+#tablaCursos, #tablaModulos, #tablaLecciones {
   width: 100%;
   margin-top: 25px;
   border-collapse: collapse;
@@ -204,20 +204,34 @@ table {
   box-shadow: var(--shadow);
 }
 
-th {
+#tablaCursos th, #tablaModulos th, #tablaLecciones th {
   background: #f1f5f9;
   font-weight: 600;
+  border-bottom: none;
+  text-align: left;
+  padding: 14px;
 }
 
-th,
-td {
+#tablaCursos td, #tablaModulos td, #tablaLecciones td {
   padding: 14px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: none;
   text-align: left;
 }
 
-tr:hover {
-  background: #f8fafc;
+#tablaCursos tr, #tablaModulos tr, #tablaLecciones tr {
+  transition: 0.2s ease;
+}
+
+#tablaCursos tr:hover, #tablaModulos tr:hover, #tablaLecciones tr:hover {
+  background-color: #f8fafc;
+}
+
+#tablaCursos button, #tablaModulos button, #tablaLecciones button {
+  outline: none;
+}
+
+#tablaCursos button:focus, #tablaModulos button:focus, #tablaLecciones button:focus {
+  outline: none;
 }
 
 /* =========================
