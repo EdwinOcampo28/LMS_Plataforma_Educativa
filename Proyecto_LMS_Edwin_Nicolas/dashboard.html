@@ -1,65 +1,185 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
-    <div class="layout">
+<div class="layout">
 
-        <div class="sidebar">
-            <h2>LMS</h2>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="pages/cursos.html">Cursos</a>
-            <a href="pages/contenidos.html">Contenidos</a>
-            <a href="pages/docentes.html">Docentes</a>
-            <a href="pages/administrativos.html">Administrativos</a>
-            <a href="public/cursos.html">Vista Pública</a>
-            <a href="index.html">Salir</a>
-        </div>
+<!-- SIDEBAR -->
 
-        <div class="content">
+<div class="sidebar">
 
-            <h1>Dashboard</h1>
+<h2>LMS</h2>
 
-            <div class="grid">
+<a class="active" href="dashboard.html">
+<i class="fa-solid fa-chart-line"></i> Dashboard
+</a>
 
-                <div class="card stat">
-                    <h3>Cursos</h3>
-                    <p id="totalCursos"></p>
-                </div>
+<a href="pages/cursos.html">
+<i class="fa-solid fa-book"></i> Cursos
+</a>
 
-                <div class="card stat">
-                    <h3>Docentes</h3>
-                    <p id="totalDocentes"></p>
-                </div>
+<a href="pages/contenidos.html">
+<i class="fa-solid fa-folder-open"></i> Contenidos
+</a>
 
-                <div class="card stat">
-                    <h3>Administrativos</h3>
-                    <p id="totalAdmins"></p>
-                </div>
+<a href="pages/docentes.html">
+<i class="fa-solid fa-chalkboard-user"></i> Docentes
+</a>
 
-            </div>
+<a href="pages/administrativos.html">
+<i class="fa-solid fa-user-gear"></i> Administrativos
+</a>
 
-            <h2>Acciones rápidas</h2>
+<a href="public/cursos.html">
+<i class="fa-solid fa-globe"></i> Vista Pública
+</a>
 
-            <div class="quick">
+<a href="index.html">
+<i class="fa-solid fa-right-from-bracket"></i> Salir
+</a>
 
-                <a class="quickCard" href="pages/cursos.html">Crear Curso</a>
-                <a class="quickCard" href="pages/docentes.html">Crear Docente</a>
-                <a class="quickCard" href="pages/administrativos.html">Administrativos</a>
+</div>
 
-            </div>
+<!-- CONTENIDO -->
 
-        </div>
-    </div>
+<div class="content">
 
-    <script src="js/dashboard.js"></script>
+<h1>Dashboard</h1>
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="statCard">
+<h3>Cursos</h3>
+<div class="statNumber" id="totalCursos"></div>
+</div>
+
+<div class="statCard">
+<h3>Docentes</h3>
+<div class="statNumber" id="totalDocentes"></div>
+</div>
+
+<div class="statCard">
+<h3>Administrativos</h3>
+<div class="statNumber" id="totalAdmins"></div>
+</div>
+
+</div>
+
+<!-- CURSOS -->
+
+<div class="sectionHeader">
+<h2>Cursos Disponibles</h2>
+</div>
+
+<div class="courseGrid">
+
+<!-- CURSO IA -->
+
+<div class="courseCard" onclick="entrarCurso('ia')">
+
+<img class="courseImage" src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
+
+<div class="courseBody">
+<div class="courseTitle">Introducción a IA</div>
+<div class="courseTeacher">Tecnología</div>
+
+<p>Aprende cómo funciona la inteligencia artificial y sus aplicaciones.</p>
+
+<button onclick="unirseCurso(event,'ia','Introducción a IA')">
+Unirse al curso
+</button>
+
+</div>
+</div>
+
+<!-- CURSO LOGICA -->
+
+<div class="courseCard" onclick="entrarCurso('logica')">
+
+<img class="courseImage" src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d">
+
+<div class="courseBody">
+<div class="courseTitle">Lógica Matemática</div>
+<div class="courseTeacher">Matemáticas</div>
+
+<p>Desarrolla pensamiento lógico y resolución de problemas.</p>
+
+<button onclick="unirseCurso(event,'logica','Lógica Matemática')">
+Unirse al curso
+</button>
+
+</div>
+</div>
+
+<!-- CURSO INGLES -->
+
+<div class="courseCard" onclick="entrarCurso('ingles')">
+
+<img class="courseImage" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
+
+<div class="courseBody">
+<div class="courseTitle">Inglés Básico</div>
+<div class="courseTeacher">Idiomas</div>
+
+<p>Aprende vocabulario y gramática básica para comenzar a hablar inglés.</p>
+
+<button onclick="unirseCurso(event,'ingles','Inglés Básico')">
+Unirse al curso
+</button>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+
+<script>
+
+function unirseCurso(e,id,nombre){
+
+e.stopPropagation()
+
+let misCursos = JSON.parse(localStorage.getItem("misCursos")) || []
+
+if(!misCursos.includes(id)){
+
+misCursos.push(id)
+
+localStorage.setItem("misCursos",JSON.stringify(misCursos))
+
+alert("Ahora haces parte del curso: " + nombre)
+
+}else{
+
+alert("Ya estás en este curso")
+
+}
+
+}
+
+function entrarCurso(id){
+
+window.location = "curso.html?curso=" + id
+
+}
+
+</script>
 
 </body>
-
 </html>

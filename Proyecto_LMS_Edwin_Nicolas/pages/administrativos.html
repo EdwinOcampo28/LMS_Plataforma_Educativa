@@ -1,14 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <title>Administrativos</title>
 <link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
+<div class="layout">
+
+<div class="sidebar">
+
+<h2>LMS</h2>
+
+<a href="../dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+<a href="cursos.html"><i class="fa-solid fa-book"></i> Cursos</a>
+<a href="contenidos.html"><i class="fa-solid fa-folder-open"></i> Contenidos</a>
+<a href="docentes.html"><i class="fa-solid fa-chalkboard-user"></i> Docentes</a>
+<a class="active" href="administrativos.html"><i class="fa-solid fa-user-gear"></i> Administrativos</a>
+<a href="../public/cursos.html"><i class="fa-solid fa-globe"></i> Vista Pública</a>
+<a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+
+</div>
+
+<div class="content">
+
 <h1>Administrativos</h1>
+
+<div class="card">
 
 <form id="adminForm">
 
@@ -22,7 +44,12 @@
 
 </form>
 
+</div>
+
 <ul id="listaAdmins"></ul>
+
+</div>
+</div>
 
 <script src="../js/administrativos.js"></script>
 

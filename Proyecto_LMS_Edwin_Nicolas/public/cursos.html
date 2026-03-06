@@ -2,127 +2,52 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Cursos</title>
-    <link rel="stylesheet" href="../css/styles.css">
+
+<meta charset="UTF-8">
+
+<title>Cursos Disponibles</title>
+
+<link rel="stylesheet" href="../css/styles.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
 
-    <h1>Gestión de Cursos</h1>
+<div class="layout">
 
-    <!-- BUSCADOR -->
-    <input type="text" id="buscarCurso" placeholder="Buscar curso...">
+<div class="sidebar">
 
-    <!-- ================= CURSOS ================= -->
+<h2>LMS</h2>
 
-    <h2>Crear / Editar Curso</h2>
+<a href="../dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
 
-    <form id="cursoForm">
+<a href="../pages/cursos.html"><i class="fa-solid fa-book"></i> Cursos</a>
 
-        <input id="codigo" placeholder="Código">
-        <input id="nombre" placeholder="Nombre">
-        <input id="descripcion" placeholder="Descripción">
-        <input id="docente" placeholder="Código docente">
+<a href="../pages/contenidos.html"><i class="fa-solid fa-folder-open"></i> Contenidos</a>
 
-        <input id="duracion" placeholder="Duración (ej: 10 horas)">
-        <input id="etiquetas" placeholder="Etiquetas (Python, Backend)">
-        <input id="categoria" placeholder="Categoría (Programación, Diseño)">
+<a href="../pages/docentes.html"><i class="fa-solid fa-chalkboard-user"></i> Docentes</a>
 
-        <select id="estado">
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-        </select>
+<a href="../pages/administrativos.html"><i class="fa-solid fa-user-gear"></i> Administrativos</a>
 
-        <button type="submit">Guardar Curso</button>
+<a class="active" href="cursos.html"><i class="fa-solid fa-globe"></i> Vista PÃºblica</a>
 
-    </form>
+<a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
 
-    <h3>Listado de Cursos</h3>
+</div>
 
-    <table>
+<div class="content">
 
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Docente</th>
-                <th>Duración</th>
-                <th>Etiquetas</th>
-                <th>Estado</th>
-                <th>Módulos</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
+<h1>Cursos Disponibles</h1>
 
-        <tbody id="tablaCursos"></tbody>
+<div id="listaCursos" class="courseGrid"></div>
 
-    </table>
+</div>
 
-    <!-- ================= MODULOS ================= -->
+</div>
 
-    <h2>Gestión de Módulos</h2>
-
-    <form id="moduloForm">
-
-        <input id="cursoModulo" placeholder="Código curso">
-        <input id="moduloNombre" placeholder="Nombre módulo">
-
-        <button type="submit">Agregar módulo</button>
-
-    </form>
-
-    <h3>Listado General de Módulos</h3>
-
-    <table>
-
-        <thead>
-            <tr>
-                <th>Curso</th>
-                <th>Módulo</th>
-                <th>Lecciones</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-
-        <tbody id="tablaModulos"></tbody>
-
-    </table>
-
-    <!-- ================= LECCIONES ================= -->
-
-    <h2>Gestión de Lecciones</h2>
-
-    <form id="leccionForm">
-
-        <input id="cursoLeccion" placeholder="Código curso">
-        <input id="moduloLeccion" placeholder="Nombre módulo">
-        <input id="titulo" placeholder="Título">
-        <input id="contenido" placeholder="Contenido">
-
-        <button type="submit">Agregar lección</button>
-
-    </form>
-
-    <h3>Listado de Lecciones</h3>
-
-    <table>
-
-        <thead>
-            <tr>
-                <th>Curso</th>
-                <th>Módulo</th>
-                <th>Título</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-
-        <tbody id="tablaLecciones"></tbody>
-
-    </table>
-
-    <script src="../js/cursos.js"></script>
+<script src="../js/publicCursos.js"></script>
 
 </body>
-
 </html>

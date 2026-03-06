@@ -192,9 +192,9 @@ button:hover {
 }
 
 /* =========================
-   TABLAS LIMPIAS CURSOS / MÓDULOS / LECCIONES
+   TABLAS
 ========================= */
-#tablaCursos, #tablaModulos, #tablaLecciones {
+table {
   width: 100%;
   margin-top: 25px;
   border-collapse: collapse;
@@ -204,34 +204,20 @@ button:hover {
   box-shadow: var(--shadow);
 }
 
-#tablaCursos th, #tablaModulos th, #tablaLecciones th {
+th {
   background: #f1f5f9;
   font-weight: 600;
-  border-bottom: none;
-  text-align: left;
-  padding: 14px;
 }
 
-#tablaCursos td, #tablaModulos td, #tablaLecciones td {
+th,
+td {
   padding: 14px;
-  border-bottom: none;
+  border-bottom: 1px solid var(--border);
   text-align: left;
 }
 
-#tablaCursos tr, #tablaModulos tr, #tablaLecciones tr {
-  transition: 0.2s ease;
-}
-
-#tablaCursos tr:hover, #tablaModulos tr:hover, #tablaLecciones tr:hover {
-  background-color: #f8fafc;
-}
-
-#tablaCursos button, #tablaModulos button, #tablaLecciones button {
-  outline: none;
-}
-
-#tablaCursos button:focus, #tablaModulos button:focus, #tablaLecciones button:focus {
-  outline: none;
+tr:hover {
+  background: #f8fafc;
 }
 
 /* =========================
@@ -272,4 +258,202 @@ button:hover {
   .content {
     padding: 20px;
   }
+}
+
+/* =========================
+   DASHBOARD STATS
+========================= */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.statCard {
+  background: var(--card);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.statCard h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.statNumber {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 10px;
+}
+
+
+/* =========================
+   CURSOS
+========================= */
+
+.courseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.courseCard {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: 0.3s;
+}
+
+.courseCard:hover {
+  transform: translateY(-6px);
+}
+
+.courseImage {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.courseBody {
+  padding: 20px;
+}
+
+.courseTitle {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.courseTeacher {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+
+.progressBar {
+  background: #e5e7eb;
+  height: 6px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progressFill {
+  height: 100%;
+  background: #22c55e;
+}
+
+.progressText {
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.browseBtn {
+  background: var(--primary);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.browseBtn:hover {
+  background: var(--primary-dark);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+
+/* =========================
+   CURSO CARDS MODERNAS
+========================= */
+
+.courseGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+margin-top:20px;
+}
+
+.courseCard{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.courseCard:hover{
+transform:translateY(-6px);
+}
+
+.courseImage{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.courseBody{
+padding:20px;
+}
+
+.courseTitle{
+font-size:18px;
+font-weight:600;
+margin-bottom:4px;
+}
+
+.courseTeacher{
+font-size:14px;
+color:#64748b;
+margin-bottom:15px;
+}
+
+.progressBar{
+width:100%;
+height:6px;
+background:#e5e7eb;
+border-radius:5px;
+overflow:hidden;
+margin-bottom:8px;
+}
+
+.progressFill{
+height:100%;
+background:#22c55e;
+}
+
+.progressText{
+font-size:13px;
+color:#64748b;
+display:flex;
+justify-content:space-between;
+}
+
+.sidebar a{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.sidebar a.active{
+background:linear-gradient(90deg,#2563eb,#7c3aed);
+font-weight:600;
 }

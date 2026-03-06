@@ -29,7 +29,7 @@ form.addEventListener("submit", function(e){
 // Eliminar administrativo
 function eliminar(index){
 
-    if(confirm("¿Seguro que deseas eliminar este administrativo?")){
+    if(confirm("Â¿Seguro que deseas eliminar este administrativo?")){
 
         admins.splice(index,1);
 

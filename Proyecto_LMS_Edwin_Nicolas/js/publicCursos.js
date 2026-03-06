@@ -1,24 +1,48 @@
+let lista = document.getElementById("listaCursos")
 
-let cursos=JSON.parse(localStorage.getItem("cursos"))||[]
+let cursos = JSON.parse(localStorage.getItem("cursos")) || []
 
-const cont=document.getElementById("listaCursos")
+if(cursos.length === 0){
+lista.innerHTML = "<p>No hay cursos disponibles</p>"
+}
 
-cursos.forEach(c=>{
+cursos.forEach((curso,i)=>{
 
-cont.innerHTML+=`
+let progreso = Math.floor(Math.random()*80)+10
 
-<div class="card">
+lista.innerHTML += `
+<div class="courseCard">
 
-<h3>${c.nombre}</h3>
+<img src="https://picsum.photos/400/200?random=${i}" class="courseImage">
 
-<p>${c.descripcion}</p>
+<div class="courseBody">
 
-<p><b>Docente:</b> ${c.docente}</p>
+<div class="courseTitle">${curso.nombre}</div>
 
-<p>Módulos: ${c.modulos.length}</p>
+<div class="courseTeacher">Docente: ${curso.docente}</div>
 
+<div class="progressBar">
+<div class="progressFill" style="width:${progreso}%"></div>
 </div>
 
+<div class="progressText">
+<span>${progreso}% completado</span>
+</div>
+
+<br>
+
+<button onclick="verCurso(${i})">Ver Curso</button>
+
+</div>
+</div>
 `
 
 })
+
+function verCurso(index){
+
+localStorage.setItem("cursoSeleccionado", index)
+
+window.location.href = "../cursopublico.html"
+
+}
