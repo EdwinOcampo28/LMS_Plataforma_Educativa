@@ -211,7 +211,7 @@ th {
 
 th,
 td {
-  padding: 14px;
+  padding: 0px;
   border-bottom: 1px solid var(--border);
   text-align: left;
 }
