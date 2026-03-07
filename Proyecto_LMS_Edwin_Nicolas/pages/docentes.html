@@ -1,64 +1,112 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
+
 <meta charset="UTF-8">
 <title>Docentes</title>
+
 <link rel="stylesheet" href="../css/styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
 
 <div class="layout">
 
+<!-- SIDEBAR -->
+
 <div class="sidebar">
 
 <h2>LMS</h2>
 
-<a href="../dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-<a href="cursos.html"><i class="fa-solid fa-book"></i> Cursos</a>
-<a href="contenidos.html"><i class="fa-solid fa-folder-open"></i> Contenidos</a>
-<a class="active" href="docentes.html"><i class="fa-solid fa-chalkboard-user"></i> Docentes</a>
-<a href="administrativos.html"><i class="fa-solid fa-user-gear"></i> Administrativos</a>
-<a href="../public/cursos.html"><i class="fa-solid fa-globe"></i> Vista Pública</a>
-<a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+<a href="../dashboard.html">
+<i class="fa-solid fa-chart-line"></i> Dashboard
+</a>
+
+<a href="cursos.html">
+<i class="fa-solid fa-book"></i> Cursos
+</a>
+
+<a href="contenidos.html">
+<i class="fa-solid fa-folder-open"></i> Contenidos
+</a>
+
+<a class="active" href="docentes.html">
+<i class="fa-solid fa-chalkboard-user"></i> Docentes
+</a>
+
+<a href="administrativos.html">
+<i class="fa-solid fa-user-gear"></i> Administrativos
+</a>
+
+<a href="../public/cursos.html">
+<i class="fa-solid fa-globe"></i> Vista Pública
+</a>
+
+<a href="../index.html">
+<i class="fa-solid fa-right-from-bracket"></i> Salir
+</a>
 
 </div>
+
+<!-- CONTENIDO -->
 
 <div class="content">
 
 <h1>Gestión de Docentes</h1>
 
+<!-- FORMULARIO -->
+
 <div class="card">
 
 <form id="docenteForm">
 
-<input id="codigo" placeholder="Código">
-<input id="nombres" placeholder="Nombres">
-<input id="apellidos" placeholder="Apellidos">
-<input id="email" placeholder="Email">
-<input id="area" placeholder="Área académica">
+<input id="codigo" placeholder="Código del docente" required>
 
-<button>Guardar</button>
+<input id="nombres" placeholder="Nombres" required>
+
+<input id="apellidos" placeholder="Apellidos" required>
+
+<input id="email" type="email" placeholder="Correo electrónico" required>
+
+<input id="area" placeholder="Área académica" required>
+
+<button>
+<i class="fa-solid fa-floppy-disk"></i> Guardar
+</button>
 
 </form>
 
 </div>
 
-<input id="buscar" placeholder="Buscar docente">
+<!-- BUSCADOR -->
+
+<input id="buscar" placeholder="🔍 Buscar docente por nombre">
+
+<!-- TABLA -->
 
 <table>
 
 <thead>
+
 <tr>
+
 <th>Código</th>
+
 <th>Nombre</th>
+
 <th>Email</th>
+
 <th>Área</th>
+
 <th>Acciones</th>
+
 </tr>
+
 </thead>
 
 <tbody id="tablaDocentes"></tbody>
@@ -66,9 +114,11 @@
 </table>
 
 </div>
+
 </div>
 
 <script src="../js/docentes.js"></script>
 
 </body>
+
 </html>
