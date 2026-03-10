@@ -22,6 +22,7 @@ const codigo = document.getElementById("codigo")
 const nombre = document.getElementById("nombre")
 const descripcion = document.getElementById("descripcion")
 const docente = document.getElementById("docente")
+const estudiante = document.getElementById("estudiante")
 const duracion = document.getElementById("duracion")
 const etiquetas = document.getElementById("etiquetas")
 const estado = document.getElementById("estado")
@@ -35,6 +36,14 @@ if (cursoForm) {
     cursoForm.addEventListener("submit", e => {
 
         e.preventDefault()
+
+        const estudiantes = cargar("estudiantes")
+        const estudianteExiste = estudiantes.find(d => d.codigo === estudiante.value)
+
+        if (!estudianteExiste) {
+            alert("El código del estudiante no existe.")
+            return
+        }
 
         const docentes = cargar("docentes")
         const docenteExiste = docentes.find(d => d.codigo === docente.value)
@@ -57,6 +66,8 @@ if (cursoForm) {
             descripcion: descripcion.value,
             docenteCodigo: docente.value,
             docenteNombre: docenteExiste.nombre,
+            estudianteCodigo: estudiante.value,
+            estudianteNombre: destudianteExiste.nombre,
             duracion: duracion.value,
             etiquetas: etiquetas.value,
             estado: estado.value
@@ -104,6 +115,7 @@ function editarCurso(i) {
     nombre.value = curso.nombre
     descripcion.value = curso.descripcion
     docente.value = curso.docenteCodigo
+    estudiante.value = curso.estudianteCodigo
     duracion.value = curso.duracion
     etiquetas.value = curso.etiquetas
     estado.value = curso.estado
