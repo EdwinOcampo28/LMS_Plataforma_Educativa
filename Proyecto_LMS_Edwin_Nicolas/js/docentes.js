@@ -8,6 +8,7 @@ const codigo = document.getElementById("codigo")
 const nombres = document.getElementById("nombres")
 const apellidos = document.getElementById("apellidos")
 const email = document.getElementById("email")
+const telefono = document.getElementById("telefono")
 const area = document.getElementById("area")
 
 let editandoIndex = null
@@ -20,55 +21,53 @@ render()
 
 docenteForm.addEventListener("submit", e => {
 
-    e.preventDefault()
+e.preventDefault()
 
-    // VALIDAR CAMPOS VACÍOS
-    if(
-        codigo.value.trim() === "" ||
-        nombres.value.trim() === "" ||
-        apellidos.value.trim() === "" ||
-        email.value.trim() === "" ||
-        area.value.trim() === ""
-    ){
-        alert("Todos los campos son obligatorios.")
-        return
-    }
+const cod = codigo.value.trim()
+const nom = nombres.value.trim()
+const ape = apellidos.value.trim()
+const mail = email.value.trim()
+const tel = telefono.value.trim()
+const ar = area.value.trim()
 
-    // VALIDAR CÓDIGO DUPLICADO
-    const codigoExiste = docentes.some((d, index) => 
-        d.codigo === codigo.value && index !== editandoIndex
-    )
+if(!cod || !nom || !ape || !mail || !tel || !ar){
+alert("Todos los campos son obligatorios")
+return
+}
 
-    if(codigoExiste){
-        alert("Ya existe un docente con ese código.")
-        return
-    }
+const codigoExiste = docentes.some((d,index)=>
+d.codigo === cod && index !== editandoIndex
+)
 
-    const nuevoDocente = {
+if(codigoExiste){
+alert("Ya existe un docente con ese código")
+return
+}
 
-        codigo: codigo.value,
+const nuevoDocente = {
 
-        nombre: nombres.value + " " + apellidos.value,
+codigo: cod,
+nombre: nom + " " + ape,
+email: mail,
+telefono: tel,
+area: ar
 
-        email: email.value,
+}
 
-        area: area.value
-    }
+if(editandoIndex !== null){
 
-    if(editandoIndex !== null){
+docentes[editandoIndex] = nuevoDocente
+editandoIndex = null
 
-        docentes[editandoIndex] = nuevoDocente
-        editandoIndex = null
+}else{
 
-    } else {
+docentes.push(nuevoDocente)
 
-        docentes.push(nuevoDocente)
+}
 
-    }
+guardar()
 
-    guardar()
-
-    docenteForm.reset()
+docenteForm.reset()
 
 })
 
@@ -77,9 +76,9 @@ docenteForm.addEventListener("submit", e => {
 // BUSCADOR
 // =========================
 
-buscar.addEventListener("input", () => {
+buscar.addEventListener("input",()=>{
 
-    render(buscar.value)
+render(buscar.value)
 
 })
 
@@ -90,9 +89,9 @@ buscar.addEventListener("input", () => {
 
 function guardar(){
 
-    localStorage.setItem("docentes", JSON.stringify(docentes))
+localStorage.setItem("docentes", JSON.stringify(docentes))
 
-    render()
+render()
 
 }
 
@@ -103,27 +102,28 @@ function guardar(){
 
 function eliminar(i){
 
-    const cursos = JSON.parse(localStorage.getItem("cursos")) || []
+const cursos = JSON.parse(localStorage.getItem("cursos")) || []
 
-    const docenteCodigo = docentes[i].codigo
+const docenteCodigo = docentes[i].codigo
 
-    const estaAsignado = cursos.some(c => c.docenteCodigo === docenteCodigo)
+const estaAsignado = cursos.some(c =>
+c.docenteCodigo === docenteCodigo
+)
 
-    if(estaAsignado){
+if(estaAsignado){
 
-        alert("No se puede eliminar este docente porque está asignado a un curso.")
+alert("No se puede eliminar este docente porque está asignado a un curso.")
+return
 
-        return
+}
 
-    }
+if(confirm("¿Seguro que deseas eliminar este docente?")){
 
-    if(confirm("¿Seguro que deseas eliminar este docente?")){
+docentes.splice(i,1)
 
-        docentes.splice(i,1)
+guardar()
 
-        guardar()
-
-    }
+}
 
 }
 
@@ -134,21 +134,20 @@ function eliminar(i){
 
 function editar(i){
 
-    const d = docentes[i]
+const d = docentes[i]
 
-    codigo.value = d.codigo
+codigo.value = d.codigo
 
-    const partes = d.nombre.split(" ")
+const partes = d.nombre.split(" ")
 
-    nombres.value = partes[0] || ""
+nombres.value = partes[0] || ""
+apellidos.value = partes.slice(1).join(" ") || ""
 
-    apellidos.value = partes.slice(1).join(" ") || ""
+email.value = d.email
+telefono.value = d.telefono || ""
+area.value = d.area
 
-    email.value = d.email
-
-    area.value = d.area
-
-    editandoIndex = i
+editandoIndex = i
 
 }
 
@@ -159,43 +158,55 @@ function editar(i){
 
 function render(filtro=""){
 
-    if(!tabla) return
+if(!tabla) return
 
-    tabla.innerHTML=""
+tabla.innerHTML=""
 
-    docentes
+const filtrados = docentes.filter(d =>
+d.nombre.toLowerCase().includes(filtro.toLowerCase())
+)
 
-    .filter(d => d.nombre.toLowerCase().includes(filtro.toLowerCase()))
+if(filtrados.length === 0){
 
-    .forEach((d,i)=>{
+tabla.innerHTML = `
+<tr>
+<td colspan="6" style="text-align:center">
+No hay docentes registrados
+</td>
+</tr>
+`
+return
 
-        tabla.innerHTML+=`
+}
 
-        <tr>
+filtrados.forEach((d,i)=>{
 
-            <td>${d.codigo}</td>
+tabla.innerHTML+=`
 
-            <td>${d.nombre}</td>
+<tr>
 
-            <td>${d.email}</td>
+<td>${d.codigo}</td>
+<td>${d.nombre}</td>
+<td>${d.email}</td>
+<td>${d.telefono || ""}</td>
+<td>${d.area}</td>
 
-            <td>${d.area}</td>
+<td>
 
-            <td>
+<button onclick="editar(${i})">
+Editar
+</button>
 
-                <button onclick="editar(${i})">
-                Editar
-                </button>
+<button onclick="eliminar(${i})">
+Eliminar
+</button>
 
-                <button onclick="eliminar(${i})">
-                Eliminar
-                </button>
+</td>
 
-            </td>
+</tr>
 
-        </tr>
+`
 
-        `
-    })
+})
 
 }

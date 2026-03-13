@@ -2,120 +2,198 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Cursos</title>
-    <link rel="stylesheet" href="../css/styles.css">
+
+<meta charset="UTF-8">
+<title>Cursos</title>
+
+<link rel="stylesheet" href="../css/styles.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
 
-    <h1>Gestión de Cursos</h1>
+<h1>Gestión de Cursos</h1>
 
-    <!-- ================= CURSOS ================= -->
+<!-- ================= CURSOS ================= -->
 
-    <form id="cursoForm">
+<form id="cursoForm">
 
-        <input id="codigo" placeholder="Código">
-        <input id="nombre" placeholder="Nombre">
-        <input id="descripcion" placeholder="Descripción">
-        <input id="docente" placeholder="Código docente">
-        <input id="estudiante" placeholder="Código estudiante">
+<input id="codigo" placeholder="Código" required>
 
-        <input id="duracion" placeholder="Duración (ej: 10 horas)">
-        <input id="etiquetas" placeholder="Etiquetas (Python, Backend)">
+<input id="nombre" placeholder="Nombre" required>
 
-        <select id="estado">
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-        </select>
+<input id="descripcion" placeholder="Descripción" required>
 
-        <button type="submit">Guardar Curso</button>
+<!-- DOCENTE -->
 
-    </form>
+<div class="select-box">
+<i class="fa-solid fa-user-tie"></i>
+<select id="docente" required>
+<option value="">Seleccionar docente</option>
+</select>
+</div>
 
-    <table>
+<!-- ESTUDIANTE -->
 
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Docente</th>
-                <th>estudiante</th>
-                <th>Duración</th>
-                <th>Etiquetas</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
+<div class="select-box">
+<i class="fa-solid fa-user-graduate"></i>
+<select id="estudiante" required>
+<option value="">Seleccionar estudiante</option>
+</select>
+</div>
 
-        <tbody id="tablaCursos"></tbody>
+<input id="duracion" placeholder="Duración (ej: 10 horas)">
 
-    </table>
+<input id="etiquetas" placeholder="Etiquetas (Python, Backend)">
 
+<!-- ESTADO -->
 
-    <!-- ================= MODULOS ================= -->
+<div class="select-box">
+<i class="fa-solid fa-toggle-on"></i>
+<select id="estado" required>
+<option value="">Seleccionar estado</option>
+<option value="Activo">Activo</option>
+<option value="Inactivo">Inactivo</option>
+</select>
+</div>
 
-    <h2>Módulos</h2>
+<!-- CATEGORIA (NECESARIA PARA TU JS) -->
 
-    <form id="moduloForm">
+<div class="select-box">
+<i class="fa-solid fa-tags"></i>
+<select id="categoria" required>
+<option value="">Seleccionar categoría</option>
+<option value="Tecnología">Tecnología</option>
+<option value="Matemáticas">Matemáticas</option>
+<option value="Idiomas">Idiomas</option>
+<option value="Ciencias">Ciencias</option>
+</select>
+</div>
 
-        <input id="cursoModulo" placeholder="Código curso">
-        <input id="moduloNombre" placeholder="Nombre módulo">
+<button type="submit">
+<i class="fa-solid fa-floppy-disk"></i>
+Guardar Curso
+</button>
 
-        <button type="submit">Guardar módulo</button>
-
-    </form>
-
-    <h3>Listado General de Módulos</h3>
-
-    <table>
-
-        <thead>
-            <tr>
-                <th>Curso</th>
-                <th>Módulo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-
-        <tbody id="tablaModulos"></tbody>
-
-    </table>
+</form>
 
 
-    <!-- ================= LECCIONES ================= -->
+<!-- ================= TABLA CURSOS ================= -->
 
-    <h2>Lecciones</h2>
+<table>
 
-    <form id="leccionForm">
+<thead>
+<tr>
+<th>Código</th>
+<th>Nombre</th>
+<th>Docente</th>
+<th>Estudiante</th>
+<th>Duración</th>
+<th>Etiquetas</th>
+<th>Estado</th>
+<th>Módulos</th>
+<th>Acciones</th>
+</tr>
+</thead>
 
-        <input id="cursoLeccion" placeholder="Curso">
-        <input id="moduloLeccion" placeholder="Módulo">
-        <input id="titulo" placeholder="Título">
-        <input id="contenido" placeholder="Contenido">
+<tbody id="tablaCursos"></tbody>
 
-        <button type="submit">Agregar lección</button>
+</table>
 
-    </form>
 
-    <h3>Listado de Lecciones</h3>
+<!-- ================= MODULOS ================= -->
 
-    <table>
+<h2>Módulos</h2>
 
-        <thead>
-            <tr>
-                <th>Curso</th>
-                <th>Módulo</th>
-                <th>Título</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
+<form id="moduloForm">
 
-        <tbody id="tablaLecciones"></tbody>
+<div class="select-box">
+<i class="fa-solid fa-book"></i>
+<select id="cursoModulo" required>
+<option value="">Seleccionar curso</option>
+</select>
+</div>
 
-    </table>
+<input id="moduloNombre" placeholder="Nombre módulo" required>
 
-    <script src="../js/cursos.js"></script>
+<button type="submit">
+<i class="fa-solid fa-layer-group"></i>
+Guardar módulo
+</button>
+
+</form>
+
+
+<h3>Listado General de Módulos</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Curso</th>
+<th>Módulo</th>
+<th>Acciones</th>
+</tr>
+</thead>
+
+<tbody id="tablaModulos"></tbody>
+
+</table>
+
+
+<!-- ================= LECCIONES ================= -->
+
+<h2>Lecciones</h2>
+
+<form id="leccionForm">
+
+<div class="select-box">
+<i class="fa-solid fa-book"></i>
+<select id="cursoLeccion" required>
+<option value="">Seleccionar curso</option>
+</select>
+</div>
+
+<div class="select-box">
+<i class="fa-solid fa-layer-group"></i>
+<select id="moduloLeccion" required>
+<option value="">Seleccionar módulo</option>
+</select>
+</div>
+
+<input id="titulo" placeholder="Título" required>
+
+<input id="contenido" placeholder="Contenido" required>
+
+<button type="submit">
+<i class="fa-solid fa-plus"></i>
+Agregar lección
+</button>
+
+</form>
+
+
+<h3>Listado de Lecciones</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Curso</th>
+<th>Módulo</th>
+<th>Título</th>
+<th>Acciones</th>
+</tr>
+</thead>
+
+<tbody id="tablaLecciones"></tbody>
+
+</table>
+
+<script src="../js/cursos.js"></script>
 
 </body>
 

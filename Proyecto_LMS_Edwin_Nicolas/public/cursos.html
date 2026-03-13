@@ -1,53 +1,113 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>Cursos Disponibles</title>
-
 <link rel="stylesheet" href="../css/styles.css">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
-
 <body>
 
 <div class="layout">
 
-<div class="sidebar">
+  <div class="sidebar">
+    <h2>LMS</h2>
+    <a href="../dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    <a href="../pages/cursos.html"><i class="fa-solid fa-book"></i> Cursos</a>
+    <a href="../pages/contenidos.html"><i class="fa-solid fa-folder-open"></i> Contenidos</a>
+    <a href="../pages/docentes.html"><i class="fa-solid fa-chalkboard-user"></i> Docentes</a>
+    <a href="../pages/administrativos.html"><i class="fa-solid fa-user-gear"></i> Administrativos</a>
+    <a class="active" href="cursos.html"><i class="fa-solid fa-globe"></i> Vista Pública</a>
+    <a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+  </div>
 
-<h2>LMS</h2>
-
-<a href="../dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-
-<a href="../pages/cursos.html"><i class="fa-solid fa-book"></i> Cursos</a>
-
-<a href="../pages/contenidos.html"><i class="fa-solid fa-folder-open"></i> Contenidos</a>
-
-<a href="../pages/docentes.html"><i class="fa-solid fa-chalkboard-user"></i> Docentes</a>
-
-<a href="../pages/administrativos.html"><i class="fa-solid fa-user-gear"></i> Administrativos</a>
-
-<a class="active" href="cursos.html"><i class="fa-solid fa-globe"></i> Vista Pública</a>
-
-<a href="../index.html"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+  <div class="content">
+    <h1>Cursos Disponibles</h1>
+    <div id="listaCursos" class="courseGrid"></div>
+  </div>
 
 </div>
 
-<div class="content">
+<script>
+// ======================
+// DATOS
+// ======================
+const cursos = JSON.parse(localStorage.getItem("cursos")) || []
+const modulos = JSON.parse(localStorage.getItem("modulos")) || []
+const lecciones = JSON.parse(localStorage.getItem("lecciones")) || []
+const estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || []
+let misCursos = JSON.parse(localStorage.getItem("misCursos")) || []
 
-<h1>Cursos Disponibles</h1>
+const listaCursos = document.getElementById("listaCursos")
 
-<div id="listaCursos" class="courseGrid"></div>
+function renderCursos() {
+  listaCursos.innerHTML = ""
 
-</div>
+  cursos.forEach(c => {
+    let html = `<div class="card">
+                  <h3>${c.nombre}</h3>
+                  <p><strong>Docente:</strong> ${c.docenteNombre}</p>
+                  <p>${c.descripcion || ""}</p>
+                  <button onclick="unirseCurso('${c.codigo}')">Unirse al curso</button>
+                  <h4>Módulos:</h4>`
 
-</div>
+    // Módulos del curso
+    const modulosCurso = modulos.filter(m => m.cursoCodigo === c.codigo)
+    if(modulosCurso.length === 0){
+      html += "<p>No hay módulos disponibles.</p>"
+    } else {
+      modulosCurso.forEach(m => {
+        html += `<h5>${m.nombre}</h5><ul>`
+        // Lecciones del módulo
+        const leccionesModulo = lecciones.filter(l => l.cursoCodigo === c.codigo && l.moduloNombre === m.nombre)
+        if(leccionesModulo.length === 0){
+          html += "<li>No hay lecciones.</li>"
+        } else {
+          leccionesModulo.forEach(l => {
+            html += `<li>${l.titulo}</li>`
+          })
+        }
+        html += "</ul>"
+      })
+    }
 
-<script src="../js/publicCursos.js"></script>
+    // Estudiantes inscritos
+    html += `<h4>Estudiantes inscritos:</h4>`
+    const inscritos = estudiantes.filter(e => misCursos.includes(c.codigo))
+    if(inscritos.length === 0){
+      html += "<p>No hay estudiantes inscritos aún.</p>"
+    } else {
+      html += "<ul>"
+      inscritos.forEach(e => {
+        html += `<li>${e.nombres} ${e.apellidos}</li>`
+      })
+      html += "</ul>"
+    }
+
+    html += "</div>"
+    listaCursos.innerHTML += html
+  })
+}
+
+// ======================
+// FUNCIONES
+// ======================
+function unirseCurso(codigo){
+  if(!misCursos.includes(codigo)){
+    misCursos.push(codigo)
+    localStorage.setItem("misCursos", JSON.stringify(misCursos))
+    alert("Ahora estás inscrito en el curso.")
+    renderCursos()
+  } else {
+    alert("Ya estás inscrito en este curso.")
+  }
+}
+
+// ======================
+// INICIALIZAR
+// ======================
+renderCursos()
+</script>
 
 </body>
 </html>

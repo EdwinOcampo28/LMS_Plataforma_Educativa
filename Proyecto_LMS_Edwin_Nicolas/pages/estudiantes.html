@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<title>estudiantes</title>
+<title>Gestión de Estudiantes</title>
 
 <link rel="stylesheet" href="../css/styles.css">
 
@@ -36,11 +36,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 </a>
 
 <a href="docentes.html">
-    <i class="fa-solid fa-folder-open"></i> Docentes
-    </a>
+<i class="fa-solid fa-chalkboard-user"></i> Docentes
+</a>
 
 <a class="active" href="estudiantes.html">
-<i class="fa-solid fa-chalkboard-user"></i> estudiantes
+<i class="fa-solid fa-user-graduate"></i> Estudiantes
 </a>
 
 <a href="administrativos.html">
@@ -61,7 +61,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <div class="content">
 
-<h1>Gestión de estudiantes</h1>
+<h1>Gestión de Estudiantes</h1>
 
 <!-- FORMULARIO -->
 
@@ -69,18 +69,35 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <form id="estudiantesForm">
 
-<input id="codigo" placeholder="Código del estudiante" required>
+<input id="identificacion" placeholder="Identificación del estudiante" required>
 
 <input id="nombres" placeholder="Nombres" required>
 
 <input id="apellidos" placeholder="Apellidos" required>
 
-<input id="email" type="email" placeholder="Correo electrónico" required>
+<div class="select-genero">
 
-<input id="area" placeholder="Área académica" required>
+<i class="fa-solid fa-venus-mars"></i>
 
-<button>
-<i class="fa-solid fa-floppy-disk"></i> Guardar
+<select id="genero" required>
+
+<option value="">Seleccionar género</option>
+<option value="Masculino">Masculino</option>
+<option value="Femenino">Femenino</option>
+<option value="Otro">Otro</option>
+
+</select>
+
+</div>
+
+<input id="fechaNacimiento" type="date" required>
+
+<input id="direccion" placeholder="Dirección" required>
+
+<input id="telefono" placeholder="Teléfono" required>
+
+<button type="submit">
+<i class="fa-solid fa-floppy-disk"></i> Guardar Estudiante
 </button>
 
 </form>
@@ -89,7 +106,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <!-- BUSCADOR -->
 
-<input id="buscar" placeholder="🔍 Buscar estudiante por nombre">
+<input id="buscar" placeholder="🔍 Buscar estudiante por nombre o identificación">
 
 <!-- TABLA -->
 
@@ -98,17 +115,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <thead>
 
 <tr>
-
-<th>Código</th>
-
-<th>Nombre</th>
-
-<th>Email</th>
-
-<th>Área</th>
-
+<th>Identificación</th>
+<th>Nombres</th>
+<th>Apellidos</th>
+<th>Género</th>
+<th>Fecha Nacimiento</th>
+<th>Dirección</th>
+<th>Teléfono</th>
 <th>Acciones</th>
-
 </tr>
 
 </thead>
@@ -124,5 +138,4 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <script src="../js/estudiantes.js"></script>
 
 </body>
-
 </html>

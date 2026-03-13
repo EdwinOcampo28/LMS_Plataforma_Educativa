@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
 <meta charset="UTF-8">
 <title>Dashboard</title>
+
 <link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -39,13 +42,13 @@
 <i class="fa-solid fa-user-gear"></i> Administrativos
 </a>
 
+<a href="pages/estudiantes.html">
+<i class="fa-solid fa-user-graduate"></i> Estudiantes
+</a>
+
 <a href="public/cursos.html">
 <i class="fa-solid fa-globe"></i> Vista Pública
 </a>
-
-<a href="pages/estudiantes.html">
-    <i class="fa-solid fa-book"></i> estudiantes
-    </a>
 
 <a href="index.html">
 <i class="fa-solid fa-right-from-bracket"></i> Salir
@@ -53,34 +56,63 @@
 
 </div>
 
+
 <!-- CONTENIDO -->
 
 <div class="content">
 
 <h1>Dashboard</h1>
 
-<!-- STATS -->
+
+<!-- TARJETAS ESTADISTICAS -->
 
 <div class="stats">
 
 <div class="statCard">
 <h3>Cursos</h3>
-<div class="statNumber" id="totalCursos"></div>
+<div class="statNumber" id="totalCursos">0</div>
+<i class="fa-solid fa-book statIcon"></i>
 </div>
 
-<div class="statCard">
+<div class="statCard estudiantes">
+<h3>Estudiantes</h3>
+<div class="statNumber" id="totalEstudiantes">0</div>
+<i class="fa-solid fa-user-graduate statIcon"></i>
+</div>
+
+<div class="statCard docentes">
 <h3>Docentes</h3>
-<div class="statNumber" id="totalDocentes"></div>
+<div class="statNumber" id="totalDocentes">0</div>
+<i class="fa-solid fa-chalkboard-user statIcon"></i>
+</div>
+
+<div class="statCard modulos">
+<h3>Módulos</h3>
+<div class="statNumber" id="totalModulos">0</div>
+<i class="fa-solid fa-layer-group statIcon"></i>
 </div>
 
 <div class="statCard">
 <h3>Administrativos</h3>
-<div class="statNumber" id="totalAdmins"></div>
+<div class="statNumber" id="totalAdmins">0</div>
+<i class="fa-solid fa-user-gear statIcon"></i>
 </div>
 
 </div>
 
-<!-- CURSOS -->
+
+<!-- GRAFICA -->
+
+<div class="card">
+
+<h2>Estadísticas del Sistema</h2>
+
+<canvas id="graficaDashboard"></canvas>
+
+</div>
+
+
+<!-- CURSOS DISPONIBLES -->
 
 <div class="sectionHeader">
 <h2>Cursos Disponibles</h2>
@@ -88,17 +120,22 @@
 
 <div class="courseGrid">
 
+
 <!-- CURSO IA -->
 
 <div class="courseCard" onclick="entrarCurso('ia')">
 
-<img class="courseImage" src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
+<img class="courseImage"
+src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
 
 <div class="courseBody">
+
 <div class="courseTitle">Introducción a IA</div>
 <div class="courseTeacher">Tecnología</div>
 
-<p>Aprende cómo funciona la inteligencia artificial y sus aplicaciones.</p>
+<p>
+Aprende cómo funciona la inteligencia artificial y sus aplicaciones.
+</p>
 
 <button onclick="unirseCurso(event,'ia','Introducción a IA')">
 Unirse al curso
@@ -107,17 +144,22 @@ Unirse al curso
 </div>
 </div>
 
+
 <!-- CURSO LOGICA -->
 
 <div class="courseCard" onclick="entrarCurso('logica')">
 
-<img class="courseImage" src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d">
+<img class="courseImage"
+src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d">
 
 <div class="courseBody">
+
 <div class="courseTitle">Lógica Matemática</div>
 <div class="courseTeacher">Matemáticas</div>
 
-<p>Desarrolla pensamiento lógico y resolución de problemas.</p>
+<p>
+Desarrolla pensamiento lógico y resolución de problemas.
+</p>
 
 <button onclick="unirseCurso(event,'logica','Lógica Matemática')">
 Unirse al curso
@@ -126,17 +168,22 @@ Unirse al curso
 </div>
 </div>
 
+
 <!-- CURSO INGLES -->
 
 <div class="courseCard" onclick="entrarCurso('ingles')">
 
-<img class="courseImage" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
+<img class="courseImage"
+src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
 
 <div class="courseBody">
+
 <div class="courseTitle">Inglés Básico</div>
 <div class="courseTeacher">Idiomas</div>
 
-<p>Aprende vocabulario y gramática básica para comenzar a hablar inglés.</p>
+<p>
+Aprende vocabulario y gramática básica para comenzar a hablar inglés.
+</p>
 
 <button onclick="unirseCurso(event,'ingles','Inglés Básico')">
 Unirse al curso
@@ -147,11 +194,59 @@ Unirse al curso
 
 </div>
 
+
+<!-- CURSOS DINAMICOS -->
+
+<div class="sectionHeader">
+<h2>Cursos del Sistema</h2>
+</div>
+
+<div class="courseGrid" id="listaCursos"></div>
+
+
+<!-- CURSO MAS POPULAR -->
+
+<div class="card">
+<h2>Curso más popular</h2>
+<div id="cursoPopular">Aún no hay datos</div>
+</div>
+
+
+<!-- ULTIMOS ESTUDIANTES -->
+
+<div class="card">
+<h2>Últimos estudiantes registrados</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Identificación</th>
+<th>Nombre</th>
+<th>Teléfono</th>
+</tr>
+</thead>
+
+<tbody id="ultimosEstudiantes"></tbody>
+
+</table>
+
+</div>
+
+
 </div>
 
 </div>
+
+
+<!-- LIBRERIA GRAFICAS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- SCRIPT DASHBOARD -->
 
 <script src="js/dashboard.js"></script>
+
 
 <script>
 

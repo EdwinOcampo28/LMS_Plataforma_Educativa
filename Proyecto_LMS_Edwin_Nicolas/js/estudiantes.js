@@ -1,201 +1,203 @@
+// ======================
+// DATOS
+// ======================
+
 let estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || []
 
+const form = document.getElementById("estudiantesForm")
 const tabla = document.getElementById("tablaestudiantes")
 const buscar = document.getElementById("buscar")
-const docenteForm = document.getElementById("docenteForm")
 
-const codigo = document.getElementById("codigo")
+const identificacion = document.getElementById("identificacion")
 const nombres = document.getElementById("nombres")
 const apellidos = document.getElementById("apellidos")
-const email = document.getElementById("email")
-const area = document.getElementById("area")
+const genero = document.getElementById("genero")
+const fechaNacimiento = document.getElementById("fechaNacimiento")
+const direccion = document.getElementById("direccion")
+const telefono = document.getElementById("telefono")
 
-let editandoIndex = null
+let editando = null
 
 render()
 
-// =========================
-// CREAR / EDITAR ESTUDIANTE
-// =========================
+// ======================
+// CREAR / ACTUALIZAR
+// ======================
 
-destudianteForm.addEventListener("submit", e => {
+form.addEventListener("submit", e => {
 
-    e.preventDefault()
+e.preventDefault()
 
-    // VALIDAR CAMPOS VACÍOS
-    if(
-        codigo.value.trim() === "" ||
-        nombres.value.trim() === "" ||
-        apellidos.value.trim() === "" ||
-        email.value.trim() === "" ||
-        area.value.trim() === ""
-    ){
-        alert("Todos los campos son obligatorios.")
-        return
-    }
+if(
+!identificacion.value ||
+!nombres.value ||
+!apellidos.value ||
+!genero.value ||
+!fechaNacimiento.value ||
+!direccion.value ||
+!telefono.value
+){
+alert("Todos los campos son obligatorios")
+return
+}
 
-    // VALIDAR CÓDIGO DUPLICADO
-    const codigoExiste = estudiantes.some((d, index) => 
-        d.codigo === codigo.value && index !== editandoIndex
-    )
+const existe = estudiantes.some((e,i)=>
+e.identificacion === identificacion.value && i !== editando
+)
 
-    if(codigoExiste){
-        alert("Ya existe un estudiante con ese código.")
-        return
-    }
+if(existe){
+alert("Ya existe un estudiante con esa identificación")
+return
+}
 
-    const nuevoDestudiante = {
+const estudiante = {
 
-        codigo: codigo.value,
+codigo: identificacion.value,
+nombre: nombres.value + " " + apellidos.value,
 
-        nombre: nombres.value + " " + apellidos.value,
+identificacion: identificacion.value,
+nombres: nombres.value,
+apellidos: apellidos.value,
+genero: genero.value,
+fechaNacimiento: fechaNacimiento.value,
+direccion: direccion.value,
+telefono: telefono.value
 
-        email: email.value,
+}
 
-        area: area.value
-    }
+if(editando !== null){
 
-    if(editandoIndex !== null){
+estudiantes[editando] = estudiante
+editando = null
 
-        estudiantes[editandoIndex] = nuevoestudiante
-        editandoIndex = null
+}else{
 
-    } else {
+estudiantes.push(estudiante)
 
-        estudiantes.push(nuevoestudiante)
+}
 
-    }
+guardar()
 
-    guardar()
-
-    estudianteForm.reset()
-
-})
-
-
-// =========================
-// BUSCADOR
-// =========================
-
-buscar.addEventListener("input", () => {
-
-    render(buscar.value)
+form.reset()
 
 })
 
-
-// =========================
+// ======================
 // GUARDAR
-// =========================
+// ======================
 
 function guardar(){
 
-    localStorage.setItem("estudiantes", JSON.stringify(estudiantes))
+localStorage.setItem("estudiantes", JSON.stringify(estudiantes))
 
-    render()
+render()
 
 }
 
-
-// =========================
-// ELIMINAR ESTUDIANTE
-// =========================
+// ======================
+// ELIMINAR
+// ======================
 
 function eliminar(i){
+    const estudiante = estudiantes[i];
+    
+    // Cargar cursos
+    const cursos = JSON.parse(localStorage.getItem("cursos")) || [];
 
-    const cursos = JSON.parse(localStorage.getItem("cursos")) || []
+    // Revisar si el estudiante está inscrito en algún curso
+    const inscrito = cursos.some(c => c.estudianteCodigo === estudiante.codigo);
 
-    const estudianteCodigo = estudiantes[i].codigo
-
-    const estaAsignado = cursos.some(c => c.estudianteCodigo === estudianteCodigo)
-
-    if(estaAsignado){
-
-        alert("No se puede eliminar este estudiantes porque está asignado a un curso.")
-
-        return
-
+    if(inscrito){
+        alert("No se puede eliminar el estudiante porque está inscrito en uno o más cursos.");
+        return;
     }
 
-    if(confirm("¿Seguro que deseas eliminar este estudiante?")){
-
-        estudiantes.splice(i,1)
-
-        guardar()
-
+    if(confirm("¿Eliminar estudiante?")){
+        estudiantes.splice(i,1);
+        guardar();
     }
-
 }
 
-
-// =========================
-// EDITAR ESTUDIANTE
-// =========================
+// ======================
+// EDITAR
+// ======================
 
 function editar(i){
 
-    const d = estudiantes[i]
+const e = estudiantes[i]
 
-    codigo.value = d.codigo
+identificacion.value = e.identificacion
+nombres.value = e.nombres
+apellidos.value = e.apellidos
+genero.value = e.genero
+fechaNacimiento.value = e.fechaNacimiento
+direccion.value = e.direccion
+telefono.value = e.telefono
 
-    const partes = d.nombre.split(" ")
+editando = i
 
-    nombres.value = partes[0] || ""
-
-    apellidos.value = partes.slice(1).join(" ") || ""
-
-    email.value = d.email
-
-    area.value = d.area
-
-    editandoIndex = i
+window.scrollTo({top:0,behavior:"smooth"})
 
 }
 
+// ======================
+// BUSCAR
+// ======================
 
-// =========================
-// RENDER TABLA
-// =========================
+buscar.addEventListener("input",()=>{
+
+render(buscar.value)
+
+})
+
+// ======================
+// MOSTRAR TABLA
+// ======================
 
 function render(filtro=""){
 
-    if(!tabla) return
+tabla.innerHTML=""
 
-    tabla.innerHTML=""
+estudiantes
 
-    docentes
+.filter(e =>
 
-    .filter(d => d.nombre.toLowerCase().includes(filtro.toLowerCase()))
+e.nombres.toLowerCase().includes(filtro.toLowerCase()) ||
+e.apellidos.toLowerCase().includes(filtro.toLowerCase()) ||
+e.identificacion.includes(filtro)
 
-    .forEach((d,i)=>{
+)
 
-        tabla.innerHTML+=`
+.forEach((e,i)=>{
 
-        <tr>
+tabla.innerHTML+=`
 
-            <td>${d.codigo}</td>
+<tr>
 
-            <td>${d.nombre}</td>
+<td>${e.identificacion}</td>
+<td>${e.nombres}</td>
+<td>${e.apellidos}</td>
+<td>${e.genero}</td>
+<td>${e.fechaNacimiento}</td>
+<td>${e.direccion}</td>
+<td>${e.telefono}</td>
 
-            <td>${d.email}</td>
+<td>
 
-            <td>${d.area}</td>
+<button onclick="editar(${i})">
+Editar
+</button>
 
-            <td>
+<button onclick="eliminar(${i})">
+Eliminar
+</button>
 
-                <button onclick="editar(${i})">
-                Editar
-                </button>
+</td>
 
-                <button onclick="eliminar(${i})">
-                Eliminar
-                </button>
+</tr>
 
-            </td>
+`
 
-        </tr>
-
-        `
-    })
+})
 
 }

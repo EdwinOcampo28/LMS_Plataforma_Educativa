@@ -1,169 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
 <title>Curso</title>
-
 <link rel="stylesheet" href="css/styles.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
 
 <div class="layout">
 
+<!-- SIDEBAR -->
 <div class="sidebar">
-
 <h2>LMS</h2>
-
 <a href="dashboard.html">Dashboard</a>
 <a href="pages/cursos.html">Cursos</a>
 <a href="pages/contenidos.html">Contenidos</a>
 <a href="pages/docentes.html">Docentes</a>
 <a href="pages/administrativos.html">Administrativos</a>
-<a href="pages/estudiantes.html">estudiantes</a>
+<a href="pages/estudiantes.html">Estudiantes</a>
 <a href="public/cursos.html">Vista Pública</a>
 <a href="index.html">Salir</a>
-
 </div>
 
+<!-- CONTENIDO -->
 <div class="content">
-
 <h1 id="tituloCurso"></h1>
 
+<!-- Módulos -->
 <h2>Módulos</h2>
-
 <div id="modulos"></div>
 
-</div>
+<!-- Formulario para agregar módulo -->
+<h3>Agregar / Editar Módulo</h3>
+<form id="moduloForm">
+<input type="text" id="moduloNombre" placeholder="Nombre módulo" required>
+<button type="submit"><i class="fa-solid fa-layer-group"></i> Guardar Módulo</button>
+</form>
 
+<!-- Lecciones -->
+<h2>Lecciones</h2>
+<form id="leccionForm">
+<select id="moduloSelect" required>
+<option value="">Seleccionar módulo</option>
+</select>
+<input type="text" id="tituloLeccion" placeholder="Título lección" required>
+<button type="submit"><i class="fa-solid fa-plus"></i> Agregar Lección</button>
+</form>
+
+</div>
 </div>
 
 <script>
-
+// =====================
+// DATOS DEL LOCALSTORAGE
+// =====================
 const params = new URLSearchParams(window.location.search)
-const curso = params.get("curso")
+const cursoId = params.get("curso")
 
-const cursos = {
+let cursos = JSON.parse(localStorage.getItem("cursos")) || []
+let modulos = JSON.parse(localStorage.getItem("modulos")) || []
+let lecciones = JSON.parse(localStorage.getItem("lecciones")) || []
 
-ia:{
-titulo:"Introducción a IA",
-
-modulos:[
-
-{
-nombre:"Conceptos básicos",
-lecciones:[
-"¿Qué es la IA?",
-"Historia de la IA",
-"Tipos de IA"
-]
-},
-
-{
-nombre:"Aplicaciones",
-lecciones:[
-"IA en medicina",
-"IA en videojuegos",
-"IA en empresas"
-]
+const curso = cursos.find(c => c.codigo === cursoId)
+if(!curso){
+    document.getElementById("tituloCurso").innerText = "Curso no encontrado"
+} else {
+    document.getElementById("tituloCurso").innerText = curso.nombre
 }
 
-]
-
-},
-
-logica:{
-titulo:"Lógica Matemática",
-
-modulos:[
-
-{
-nombre:"Fundamentos",
-lecciones:[
-"Proposiciones",
-"Tablas de verdad",
-"Conectores lógicos"
-]
-},
-
-{
-nombre:"Razonamiento",
-lecciones:[
-"Silogismos",
-"Demostraciones"
-]
-}
-
-]
-
-},
-
-ingles:{
-titulo:"Inglés Básico",
-
-modulos:[
-
-{
-nombre:"Vocabulario",
-lecciones:[
-"Saludos",
-"Números",
-"Colores"
-]
-},
-
-{
-nombre:"Gramática",
-lecciones:[
-"Verbo To Be",
-"Pronombres",
-"Oraciones simples"
-]
-}
-
-]
-
-}
-
-}
-
-const data = cursos[curso]
-
-document.getElementById("tituloCurso").innerText = data.titulo
-
+// =====================
+// ELEMENTOS
+// =====================
 const modulosDiv = document.getElementById("modulos")
+const moduloForm = document.getElementById("moduloForm")
+const moduloNombre = document.getElementById("moduloNombre")
+const moduloSelect = document.getElementById("moduloSelect")
 
-data.modulos.forEach(m => {
+const leccionForm = document.getElementById("leccionForm")
+const tituloLeccion = document.getElementById("tituloLeccion")
 
-let html = `
-<div class="card">
+let editModuloIndex = null
 
-<h3>${m.nombre}</h3>
+// =====================
+// FUNCIONES
+// =====================
+function guardar(key, data){ localStorage.setItem(key, JSON.stringify(data)) }
+function renderModulos(){
+    modulosDiv.innerHTML = ""
+    moduloSelect.innerHTML = `<option value="">Seleccionar módulo</option>`
+    const modulosCurso = modulos.filter(m => m.cursoCodigo === cursoId)
+    modulosCurso.forEach((m,i)=>{
+        // Card módulo
+        let card = document.createElement("div")
+        card.classList.add("card")
+        let html = `<h3>${m.nombre}</h3>
+                    <button onclick="editarModulo(${i})">Editar</button>
+                    <button onclick="eliminarModulo(${i})">Eliminar</button>
+                    <ul>`
+        // Lecciones del módulo
+        const leccionesModulo = lecciones.filter(l => l.cursoCodigo === cursoId && l.moduloNombre === m.nombre)
+        leccionesModulo.forEach(l=>{ html += `<li>${l.titulo}</li>` })
+        html += `</ul>`
+        card.innerHTML = html
+        modulosDiv.appendChild(card)
+        // Select módulo
+        let opt = document.createElement("option")
+        opt.value = m.nombre
+        opt.textContent = m.nombre
+        moduloSelect.appendChild(opt)
+    })
+}
 
-<ul>
-`
+// =====================
+// MÓDULOS
+// =====================
+moduloForm.addEventListener("submit", e=>{
+    e.preventDefault()
+    if(!moduloNombre.value.trim()) return
 
-m.lecciones.forEach(l => {
+    const existe = modulos.some((m,i)=>m.nombre === moduloNombre.value && m.cursoCodigo===cursoId && i!==editModuloIndex)
+    if(existe){ alert("Ya existe un módulo con ese nombre"); return }
 
-html += `<li>${l}</li>`
+    const nuevoModulo = { cursoCodigo: cursoId, nombre: moduloNombre.value }
 
+    if(editModuloIndex!==null){
+        modulos[editModuloIndex].nombre = moduloNombre.value
+        editModuloIndex = null
+    } else {
+        modulos.push(nuevoModulo)
+    }
+
+    guardar("modulos", modulos)
+    moduloForm.reset()
+    renderModulos()
 })
 
-html += `
-</ul>
+// Editar módulo
+function editarModulo(i){
+    moduloNombre.value = modulos[i].nombre
+    editModuloIndex = i
+}
 
-</div>
-`
+// Eliminar módulo (solo si no tiene lecciones)
+function eliminarModulo(i){
+    const m = modulos[i]
+    const tieneLecciones = lecciones.some(l => l.cursoCodigo===cursoId && l.moduloNombre===m.nombre)
+    if(tieneLecciones){ alert("No se puede eliminar el módulo porque tiene lecciones"); return }
+    if(confirm("Eliminar módulo?")) {
+        modulos.splice(i,1)
+        guardar("modulos", modulos)
+        renderModulos()
+    }
+}
 
-modulosDiv.innerHTML += html
+// =====================
+// LECCIONES
+// =====================
+leccionForm.addEventListener("submit", e=>{
+    e.preventDefault()
+    if(!tituloLeccion.value.trim() || !moduloSelect.value) return
 
+    lecciones.push({
+        cursoCodigo: cursoId,
+        moduloNombre: moduloSelect.value,
+        titulo: tituloLeccion.value
+    })
+
+    guardar("lecciones", lecciones)
+    tituloLeccion.value = ""
+    renderModulos()
 })
 
+// =====================
+// INICIALIZAR
+// =====================
+renderModulos()
 </script>
 
 </body>
-
 </html>
