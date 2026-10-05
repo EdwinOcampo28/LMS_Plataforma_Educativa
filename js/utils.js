@@ -13,9 +13,12 @@ window.LMS = (() => {
     }
   }
 
+  function saveRaw(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+
   function save(key, value) {
     try {
       localStorage.setItem(key, JSON.stringify(value));
+      if (key !== 'auditoria' && window.LMSPro?.audit) window.LMSPro.audit('GUARDAR', key, `Registros: ${Array.isArray(value) ? value.length : 'actualizado'}`);
       window.dispatchEvent(new CustomEvent('lms:data-change', { detail: { key, value } }));
       return true;
     } catch (error) {
@@ -81,13 +84,14 @@ window.LMS = (() => {
         document.documentElement.classList.toggle('dark-mode', dark);
         localStorage.setItem('lmsTheme', dark ? 'dark' : 'light');
         sync();
+        notify(dark ? 'Modo oscuro activado' : 'Modo claro activado', 'theme');
       });
       document.body.appendChild(button);
       sync();
     }
   }
 
-  return { KEYS, load, save, escapeHTML, notify, confirmAction, normalize, emptyState, initTheme };
+  return { KEYS, load, save, saveRaw, escapeHTML, notify, confirmAction, normalize, emptyState, initTheme };
 })();
 
 document.addEventListener('DOMContentLoaded', () => {

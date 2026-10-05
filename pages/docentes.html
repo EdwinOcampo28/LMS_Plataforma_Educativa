@@ -19,43 +19,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <!-- SIDEBAR -->
 
-<div class="sidebar">
-
-<h2>LMS</h2>
-
-<a href="../dashboard.html">
-<i class="fa-solid fa-chart-line"></i> Dashboard
-</a>
-
-<a href="cursos.html">
-<i class="fa-solid fa-book"></i> Cursos
-</a>
-
-<a href="contenidos.html">
-<i class="fa-solid fa-folder-open"></i> Contenidos
-</a>
-
-<a class="active" href="docentes.html">
-<i class="fa-solid fa-chalkboard-user"></i> Docentes
-</a>
-
-<a href="estudiantes.html">
-<i class="fa-solid fa-user-graduate"></i> Estudiantes
-</a>
-
-<a href="reportes.html"><i class="fa-solid fa-chart-pie"></i> Reportes</a><a href="administrativos.html">
-<i class="fa-solid fa-user-gear"></i> Administrativos
-</a>
-
-<a href="../public/cursos.html">
-<i class="fa-solid fa-globe"></i> Vista Pública
-</a>
-
-<a href="#" onclick="cerrarSesion(event);">
-<i class="fa-solid fa-right-from-bracket"></i> Salir
-</a>
-
-</div>
+<div class="sidebar" id="appSidebar"></div>
 
 <!-- CONTENIDO -->
 
@@ -146,6 +110,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <script src="../js/utils.js"></script>
 <script src="../js/logout.js"></script>
+<script src="../js/nav.js"></script>
 <script src="../js/authGuard.js"></script>
 <script src="../js/docentes.js"></script>
 </body>

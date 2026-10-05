@@ -4,22 +4,13 @@
     <meta charset="UTF-8">
     <title>Contenidos</title>
     <link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 <div class="layout">
 
     <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h2>LMS</h2>
-        <a href="../dashboard.html">Dashboard</a>
-        <a href="cursos.html">Cursos</a>
-        <a href="contenidos.html">Contenidos</a>
-        <a href="docentes.html">Docentes</a>
-        <a href="estudiantes.html">estudiantes</a>
-        <a href="reportes.html"><i class="fa-solid fa-chart-pie"></i> Reportes</a><a href="administrativos.html">Administrativos</a>
-        <a href="../public/cursos.html">Vista Pública</a>
-        <a href="#" onclick="cerrarSesion(event);">Salir</a>
-    </div>
+    <div class="sidebar" id="appSidebar"></div>
 
     <!-- CONTENIDO -->
     <div class="content">
@@ -54,6 +45,7 @@
 </div>
 <script src="../js/utils.js"></script>
 <script src="../js/logout.js"></script>
+<script src="../js/nav.js"></script>
 <script src="../js/authGuard.js"></script>
 <script src="../js/contenidos.js"></script>
 </body>
