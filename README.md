@@ -121,3 +121,19 @@ El proyecto utiliza las siguientes claves de `LocalStorage`:
 7. Reportes y certificados.
 
 **Autor:** Edwin Nicolas
+
+## Versión 4.0 — LMS Académico
+
+- Bootstrap seguro para crear el primer administrador.
+- Roles de administrador.
+- Portal de estudiante con identificación.
+- Inscripciones por estudiante.
+- Progreso individual por estudiante y curso.
+- Evaluaciones de opción múltiple.
+- Calificaciones y promedio.
+- Certificados imprimibles al completar curso y aprobar evaluación.
+- Reportes académicos.
+- Dashboard administrativo ampliado.
+- Modo oscuro persistente y mejoras de accesibilidad.
+
+> Nota: esta versión sigue siendo local y utiliza LocalStorage/SessionStorage. Para producción se recomienda migrar autenticación, datos y archivos a una API + base de datos.

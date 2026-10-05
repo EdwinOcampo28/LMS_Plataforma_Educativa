@@ -35,7 +35,8 @@ function cargarCursos() {
 
 function cursoPopular() {
   const target = document.getElementById('cursoPopular'); if (!target) return;
-  const cursos = cargar('cursos'); const inscritos = cargar('misCursos');
+  const cursos = cargar('cursos'); const inscripciones = cargar('inscripciones', {});
+  const inscritos = Object.values(inscripciones).flatMap(x => Array.isArray(x) ? x : []);
   if (!cursos.length) { target.innerHTML = LMS.emptyState('Aún no hay cursos.'); return; }
   const popular = cursos.map(c => ({ ...c, inscritos: inscritos.filter(id => id === c.codigo).length })).sort((a,b) => b.inscritos-a.inscritos)[0];
   target.innerHTML = `<div class="popular-course"><div><span class="badge badge-primary">Más destacado</span><h3>${LMS.escapeHTML(popular.nombre)}</h3><p>Docente: ${LMS.escapeHTML(popular.docenteNombre || 'No asignado')}</p></div><strong>${popular.inscritos} inscripción(es)</strong></div>`;

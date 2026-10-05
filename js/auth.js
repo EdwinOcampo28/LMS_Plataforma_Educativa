@@ -7,7 +7,9 @@ if (loginForm) {
     const email = document.getElementById('email').value.trim().toLowerCase();
     const password = document.getElementById('password').value;
     const admins = LMS.load('administrativos');
-    const user = admins.find(admin => admin.email?.toLowerCase() === email && admin.password === password);
+    const index = admins.findIndex(admin => admin.email?.toLowerCase() === email && admin.password === password);
+    const user = index >= 0 ? { ...admins[index], role: admins[index].role || 'admin' } : null;
+    if (index >= 0 && !admins[index].role) { admins[index] = user; LMS.save('administrativos', admins); }
 
     if (!user) {
       LMS.notify('Correo o contraseña incorrectos.', 'error');

@@ -62,5 +62,42 @@ window.LMS = (() => {
     return `<div class="empty-state"><i class="fa-regular fa-folder-open"></i><h3>${escapeHTML(message)}</h3><p>Cuando agregues información aparecerá aquí.</p></div>`;
   }
 
-  return { KEYS, load, save, escapeHTML, notify, confirmAction, normalize, emptyState };
+  function initTheme() {
+    const saved = localStorage.getItem('lmsTheme') || 'light';
+    document.documentElement.classList.toggle('dark-mode', saved === 'dark');
+    if (!document.getElementById('lmsThemeToggle')) {
+      const button = document.createElement('button');
+      button.id = 'lmsThemeToggle';
+      button.className = 'theme-toggle';
+      button.type = 'button';
+      button.setAttribute('aria-label', 'Cambiar tema');
+      const sync = () => {
+        const dark = document.documentElement.classList.contains('dark-mode');
+        button.innerHTML = `<i class=\"fa-solid ${dark ? 'fa-sun' : 'fa-moon'}\"></i>`;
+        button.title = dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+      };
+      button.addEventListener('click', () => {
+        const dark = !document.documentElement.classList.contains('dark-mode');
+        document.documentElement.classList.toggle('dark-mode', dark);
+        localStorage.setItem('lmsTheme', dark ? 'dark' : 'light');
+        sync();
+      });
+      document.body.appendChild(button);
+      sync();
+    }
+  }
+
+  return { KEYS, load, save, escapeHTML, notify, confirmAction, normalize, emptyState, initTheme };
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.LMS) {
+    const skip = document.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#main-content';
+    skip.textContent = 'Saltar al contenido';
+    document.body.prepend(skip);
+    document.querySelector('.content')?.setAttribute('id', 'main-content');
+    LMS.initTheme();
+  }
+});

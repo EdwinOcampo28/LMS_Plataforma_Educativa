@@ -94,8 +94,14 @@ if (cursoForm) {
 
 function renderCursos() {
   if (!tablaCursos) return;
-  if (!cursos.length) { tablaCursos.innerHTML = `<tr><td colspan="9">${LMS.emptyState('No hay cursos registrados.')}</td></tr>`; return; }
-  tablaCursos.innerHTML = cursos.map((c, i) => {
+  const query = LMS.normalize(buscarCursos?.value || '');
+  const estadoFiltro = filtrarEstado?.value || '';
+  const visibles = cursos.map((c, i) => ({ c, i })).filter(({c}) => {
+    const texto = LMS.normalize(`${c.codigo} ${c.nombre} ${c.categoria || ''} ${c.docenteNombre || ''}`);
+    return (!query || texto.includes(query)) && (!estadoFiltro || c.estado === estadoFiltro);
+  });
+  if (!visibles.length) { tablaCursos.innerHTML = `<tr><td colspan="9">${LMS.emptyState('No hay cursos registrados.')}</td></tr>`; return; }
+  tablaCursos.innerHTML = visibles.map(({c, i}) => {
     const totalModulos = modulos.filter(m => m.cursoCodigo === c.codigo).length;
     return `<tr><td>${LMS.escapeHTML(c.codigo)}</td><td><strong>${LMS.escapeHTML(c.nombre)}</strong><small>${LMS.escapeHTML(c.categoria || 'Sin categoría')}</small></td><td>${LMS.escapeHTML(c.docenteNombre)}</td><td>${LMS.escapeHTML(c.estudianteNombre)}</td><td>${LMS.escapeHTML(c.duracion || '—')}</td><td>${LMS.escapeHTML(c.etiquetas || '—')}</td><td><span class="badge ${c.estado === 'Activo' ? 'badge-success' : 'badge-muted'}">${LMS.escapeHTML(c.estado)}</span></td><td>${totalModulos}</td><td class="actions"><button class="btn-secondary" onclick="editarCurso(${i})">Editar</button><button class="btn-danger" onclick="eliminarCurso(${i})">Eliminar</button></td></tr>`;
   }).join('');
@@ -159,4 +165,6 @@ function renderLecciones() {
 function editarLeccion(i) { const l = lecciones[i]; if (!l) return; cursoLeccion.value = l.cursoCodigo; cursoLeccion.dispatchEvent(new Event('change')); setTimeout(() => { moduloLeccion.value = l.moduloNombre; }, 0); titulo.value = l.titulo; contenido.value = l.contenido; editandoLeccion = i; window.scrollTo({ top: leccionForm?.offsetTop || 0, behavior: 'smooth' }); }
 function eliminarLeccion(i) { LMS.confirmAction('¿Eliminar esta lección?', () => { lecciones.splice(i,1); guardar('lecciones',lecciones); renderLecciones(); renderModulos(); LMS.notify('Lección eliminada.'); }); }
 
+buscarCursos?.addEventListener('input', renderCursos);
+filtrarEstado?.addEventListener('change', renderCursos);
 cargarSelectores(); cargarCursosEnSelect(); renderCursos(); renderModulos(); renderLecciones();

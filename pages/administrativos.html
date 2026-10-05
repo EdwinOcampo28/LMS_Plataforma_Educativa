@@ -34,14 +34,14 @@
 
 <a href="../public/cursos.html"><i class="fa-solid fa-globe"></i> Vista Pública</a>
 
-<a href="#" onclick="cerrarSesion(); return false;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+<a href="#" onclick="cerrarSesion(event);"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
 
 </div>
 
 <!-- CONTENIDO -->
 <div class="content">
 
-<h1>Administrativos</h1>
+<div class="pageHero"><div><span class="eyebrow">SEGURIDAD</span><h1>Administrativos</h1><p class="hint">Gestiona las cuentas con acceso al panel de administración.</p></div><span class="heroIcon"><i class="fa-solid fa-shield-halved"></i></span></div>
 
 <div class="card">
 
@@ -55,7 +55,7 @@
 
 <input id="email" type="email" placeholder="Email" required>
 
-<input id="password" type="password" placeholder="Password" required>
+<input id="password" type="password" placeholder="Contraseña (mínimo 6 caracteres)" minlength="6" required>
 
 <button type="submit">
 <i class="fa-solid fa-save"></i> Guardar
