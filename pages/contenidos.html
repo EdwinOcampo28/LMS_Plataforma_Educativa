@@ -18,7 +18,7 @@
         <a href="estudiantes.html">estudiantes</a>
         <a href="administrativos.html">Administrativos</a>
         <a href="../public/cursos.html">Vista Pública</a>
-        <a href="../index.html">Salir</a>
+        <a href="#" onclick="cerrarSesion(); return false;">Salir</a>
     </div>
 
     <!-- CONTENIDO -->
@@ -30,7 +30,7 @@
             <h2>Agregar Contenido</h2>
             <form id="contenidoForm">
                 <label>Curso</label>
-                <input id="cursoContenido" placeholder="Nombre del curso">
+                <select id="cursoContenido" required><option value="">Seleccionar curso</option></select>
                 <label>Título de la lección</label>
                 <input id="tituloContenido" placeholder="Ej: Introducción a Python">
                 <label>Video</label>
@@ -52,6 +52,9 @@
     </div>
 
 </div>
+<script src="../js/utils.js"></script>
+<script src="../js/logout.js"></script>
+<script src="../js/authGuard.js"></script>
 <script src="../js/contenidos.js"></script>
 </body>
 </html>

@@ -1,0 +1,1 @@
+function cerrarSesion(){sessionStorage.removeItem('usuarioActivo');location.href='index.html'}

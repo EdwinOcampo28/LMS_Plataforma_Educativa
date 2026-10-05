@@ -50,7 +50,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <i class="fa-solid fa-globe"></i> Vista Pública
 </a>
 
-<a href="index.html">
+<a href="#" onclick="cerrarSesion(); return false;">
 <i class="fa-solid fa-right-from-bracket"></i> Salir
 </a>
 
@@ -245,40 +245,9 @@ Unirse al curso
 
 <!-- SCRIPT DASHBOARD -->
 
+<script src="js/utils.js"></script>
+<script src="js/logout.js"></script>
+<script src="js/authGuard.js"></script>
 <script src="js/dashboard.js"></script>
-
-
-<script>
-
-function unirseCurso(e,id,nombre){
-
-e.stopPropagation()
-
-let misCursos = JSON.parse(localStorage.getItem("misCursos")) || []
-
-if(!misCursos.includes(id)){
-
-misCursos.push(id)
-
-localStorage.setItem("misCursos",JSON.stringify(misCursos))
-
-alert("Ahora haces parte del curso: " + nombre)
-
-}else{
-
-alert("Ya estás en este curso")
-
-}
-
-}
-
-function entrarCurso(id){
-
-window.location = "curso.html?curso=" + id
-
-}
-
-</script>
-
 </body>
 </html>

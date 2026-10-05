@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cursos Disponibles</title>
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <div class="sidebar">
+    <h2>LMS</h2>
+    <a href="../dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    <a href="../pages/cursos.html"><i class="fa-solid fa-book"></i> Cursos</a>
+    <a href="../pages/contenidos.html"><i class="fa-solid fa-folder-open"></i> Contenidos</a>
+    <a href="../pages/docentes.html"><i class="fa-solid fa-chalkboard-user"></i> Docentes</a>
+    <a href="../pages/administrativos.html"><i class="fa-solid fa-user-gear"></i> Administrativos</a>
+    <a class="active" href="cursos.html"><i class="fa-solid fa-globe"></i> Vista Pública</a>
+    <a href="#" onclick="cerrarSesion(); return false;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+  </div>
+
+  <div class="content">
+    <h1>Cursos Disponibles</h1>
+    <div id="listaCursos" class="courseGrid"></div>
+  </div>
+
+</div>
+
+
+<script src="../js/utils.js"></script>
+<script src="../js/logout.js"></script>
+<script src="../js/publicCursos.js"></script>
+</body>
+</html>
