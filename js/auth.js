@@ -17,6 +17,7 @@ if (loginForm) {
     }
 
     sessionStorage.setItem('usuarioActivo', JSON.stringify(user));
+    if (window.LMSPro?.event) LMSPro.event('INICIAR_SESION','administrativo',user.email,'Inicio de sesión',`Bienvenido al panel, ${user.nombres || user.nombre || user.email}.`,'success','all');
     const redirect = new URLSearchParams(location.search).get('redirect');
     window.location.href = redirect || 'dashboard.html';
   });

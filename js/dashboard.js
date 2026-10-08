@@ -21,16 +21,24 @@ function actualizarDashboard() {
 }
 
 function crearGrafica() {
-  const canvas = document.getElementById('graficaDashboard'); if (!canvas || typeof Chart === 'undefined') return;
-  if (window.lmsChart) window.lmsChart.destroy();
+  const canvas = document.getElementById('graficaDashboard');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
   const data = [cargar('cursos').length, cargar('estudiantes').length, cargar('docentes').length, cargar('administrativos').length, cargar('modulos').length];
-  window.lmsChart = new Chart(canvas, { type: 'bar', data: { labels: ['Cursos','Estudiantes','Docentes','Administrativos','Módulos'], datasets: [{ label: 'Registros', data, borderRadius: 10, borderSkipped: false }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } }, x: { grid: { display: false } } } } });
+  const labels = ['Cursos','Estudiantes','Docentes','Administrativos','Módulos'];
+  const dpr = window.devicePixelRatio || 1;
+  const width = canvas.clientWidth || 800, height = 300;
+  canvas.width = width*dpr; canvas.height = height*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,width,height);
+  const max=Math.max(...data,1), pad=35, gap=18, barW=(width-pad*2-gap*(data.length-1))/data.length;
+  ctx.font='600 12px Arial'; ctx.textAlign='center';
+  data.forEach((value,i)=>{ const x=pad+i*(barW+gap); const h=(value/max)*(height-80); const y=height-45-h; ctx.fillStyle='#4f46e5'; ctx.roundRect(x,y,barW,h,10); ctx.fill(); ctx.fillStyle='#334155'; ctx.fillText(String(value),x+barW/2,y-8); ctx.fillStyle='#64748b'; ctx.fillText(labels[i],x+barW/2,height-20); });
 }
 
 function cargarCursos() {
   const contenedor = document.getElementById('listaCursos'); if (!contenedor) return;
   const cursos = cargar('cursos');
-  contenedor.innerHTML = cursos.length ? cursos.map(c => `<article class="courseCard"><div class="courseBody"><span class="badge badge-primary">${LMS.escapeHTML(c.categoria || 'Curso')}</span><div class="courseTitle">${LMS.escapeHTML(c.nombre)}</div><div class="courseTeacher"><i class="fa-solid fa-chalkboard-user"></i> ${LMS.escapeHTML(c.docenteNombre || 'Sin docente')}</div><p>${LMS.escapeHTML(c.descripcion || 'Sin descripción')}</p><div class="courseMeta"><span>${LMS.escapeHTML(c.duracion || 'Duración no definida')}</span><span>${LMS.escapeHTML(c.estado || 'Sin estado')}</span></div><a class="btn-link" href="curso.html?curso=${encodeURIComponent(c.codigo)}">Ver curso <i class="fa-solid fa-arrow-right"></i></a></div></article>`).join('') : LMS.emptyState('No hay cursos registrados.');
+  contenedor.innerHTML = cursos.length ? cursos.map(c => `<article class="courseCard"><div class="courseBody"><span class="badge badge-primary">${LMS.escapeHTML(c.categoria || 'Curso')}</span><div class="courseTitle">${LMS.escapeHTML(c.nombre)}</div><div class="courseTeacher"><i class="fa-solid fa-chalkboard-user"></i> ${LMS.escapeHTML(c.docenteNombre || 'Sin docente')}</div><p>${LMS.escapeHTML(c.descripcion || 'Sin descripción')}</p><div class="courseMeta"><span>${LMS.escapeHTML(c.duracion || 'Duración no definida')}</span><span>${LMS.escapeHTML(c.estado || 'Sin estado')}</span></div><a class="btn-link" href="cursopublico.html?curso=${encodeURIComponent(c.codigo)}">Ver curso <i class="fa-solid fa-arrow-right"></i></a></div></article>`).join('') : LMS.emptyState('No hay cursos registrados.');
 }
 
 function cursoPopular() {
@@ -50,4 +58,8 @@ function ultimosEstudiantes() {
 
 function renderDashboard() { actualizarDashboard(); crearGrafica(); cargarCursos(); cursoPopular(); ultimosEstudiantes(); }
 renderDashboard();
+window.addEventListener('resize', crearGrafica);
 window.addEventListener('lms:data-change', renderDashboard);
+window.addEventListener('storage', (event) => {
+  if (['cursos','estudiantes','docentes','administrativos','modulos','lecciones','inscripciones'].includes(event.key)) renderDashboard();
+});

@@ -3,10 +3,10 @@ const buscarPublico = document.getElementById('buscarPublico');
 const filtrarCategoria = document.getElementById('filtrarCategoria');
 let misCursos = LMS.load('misCursos');
 const estudianteActivo = JSON.parse(sessionStorage.getItem('estudianteActivo') || 'null');
-const inscripciones = LMS.load('inscripciones', {});
+
 
 function renderCursosPublicos() {
-  const cursos = LMS.load('cursos');
+  const cursos = LMS.load('cursos').filter(c => c.estado !== 'Inactivo');
   const modulos = LMS.load('modulos');
   const lecciones = LMS.load('lecciones');
   if (!lista) return;
@@ -21,7 +21,8 @@ function renderCursosPublicos() {
   lista.innerHTML = visibles.map((curso, i) => {
     const mods = modulos.filter(m => m.cursoCodigo === curso.codigo);
     const totalLessons = lecciones.filter(l => l.cursoCodigo === curso.codigo).length;
-    const joined = estudianteActivo ? (inscripciones[estudianteActivo.codigo] || []).includes(curso.codigo) : misCursos.includes(curso.codigo);
+    const actuales = LMS.load('inscripciones', {});
+    const joined = estudianteActivo ? (actuales[estudianteActivo.codigo] || []).includes(curso.codigo) : LMS.load('misCursos', []).includes(curso.codigo);
     return `<article class="courseCard"><div class="courseVisual courseVisual-${i % 5}"><i class="fa-solid fa-graduation-cap"></i></div><div class="courseBody"><span class="badge ${curso.estado === 'Activo' ? 'badge-success' : 'badge-muted'}">${LMS.escapeHTML(curso.estado || 'Sin estado')}</span><div class="courseTitle">${LMS.escapeHTML(curso.nombre)}</div><div class="courseTeacher">${LMS.escapeHTML(curso.docenteNombre || 'Docente no asignado')}</div><p>${LMS.escapeHTML(curso.descripcion || 'Este curso todavía no tiene descripción.')}</p><div class="courseMeta"><span><i class="fa-solid fa-layer-group"></i> ${mods.length} módulos</span><span><i class="fa-solid fa-book-open"></i> ${totalLessons} lecciones</span></div><div class="courseActions"><button class="${joined ? 'btn-secondary' : ''}" onclick="unirseCurso('${LMS.escapeHTML(curso.codigo)}')">${joined ? 'Inscrito ✓' : 'Unirme al curso'}</button><button class="btn-outline" onclick="verCurso('${LMS.escapeHTML(curso.codigo)}')">Ver detalles</button></div></div></article>`;
   }).join('');
 }
@@ -31,11 +32,20 @@ function unirseCurso(codigo) {
   const data = LMS.load('inscripciones', {});
   data[estudianteActivo.codigo] = data[estudianteActivo.codigo] || [];
   if (data[estudianteActivo.codigo].includes(codigo)) { LMS.notify('Ya estás inscrito en este curso.', 'warning'); return; }
-  data[estudianteActivo.codigo].push(codigo); LMS.save('inscripciones', data); LMS.notify('Te has inscrito correctamente.'); renderCursosPublicos();
+  data[estudianteActivo.codigo].push(codigo);
+  LMS.save('inscripciones', data);
+  const curso = LMS.load('cursos', []).find(c => c.codigo === codigo);
+  if (window.LMSPro?.event) LMSPro.event('INSCRIBIR','curso',`${estudianteActivo.codigo} · ${codigo}`,'Nueva inscripción',`Te inscribiste en ${curso?.nombre || codigo}.`,'success',estudianteActivo.codigo);
+  LMS.notify(`Te has inscrito en ${curso?.nombre || 'el curso'} correctamente.`,'success');
+  renderCursosPublicos();
+  window.dispatchEvent(new CustomEvent('lms:data-change',{detail:{key:'inscripciones',value:data}}));
 }
-function verCurso(codigo) { localStorage.setItem('cursoSeleccionado', codigo); window.location.href = '../cursopublico.html'; }
+function verCurso(codigo) { localStorage.setItem('cursoSeleccionado', codigo); window.location.href = `../cursopublico.html?curso=${encodeURIComponent(codigo)}`; }
 renderCursosPublicos();
 
 
 buscarPublico?.addEventListener('input', renderCursosPublicos);
 filtrarCategoria?.addEventListener('change', renderCursosPublicos);
+
+window.addEventListener('lms:data-change', e => { if (e.detail?.key === 'inscripciones') renderCursosPublicos(); });
+window.addEventListener('storage', e => { if (e.key === 'inscripciones') renderCursosPublicos(); });

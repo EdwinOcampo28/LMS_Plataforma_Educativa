@@ -1,4 +1,4 @@
-# 🎓 LMS - Plataforma Educativa Optimizada
+# 🎓 EDUNOVA — Plataforma de Aprendizaje y Gestión Académica
 
 Sistema web educativo desarrollado con **HTML5, CSS3 y JavaScript Vanilla**, pensado para funcionar localmente sin backend mediante `LocalStorage`.
 
@@ -87,6 +87,33 @@ Proyecto_LMS_Edwin_Nicolas/
 └── README.md
 ```
 
+## 🎓 Cursos demo interactivos
+
+La versión incluye tres cursos de demostración que se crean automáticamente si no existen:
+
+- **WEB-001 — Desarrollo Web desde Cero**: 3 módulos, 9 lecciones y evaluación final de 5 preguntas.
+- **PY-001 — Python para Principiantes**: 3 módulos, 9 lecciones y evaluación final de 5 preguntas.
+- **SQL-001 — SQL y Bases de Datos desde Cero**: 3 módulos, 9 lecciones y evaluación final de 5 preguntas.
+
+Estudiante demo:
+- Identificación: `EST-DEMO-001`
+
+### Flujo completo de aprendizaje
+
+1. Entra al **Portal del Estudiante** con `EST-DEMO-001`.
+2. Abre **Catálogo** y elige un curso.
+3. Pulsa **Empezar curso**.
+4. Abre cada lección y realiza la actividad propuesta.
+5. Pulsa **Marcar como completada** para registrar el avance.
+6. Completa todas las lecciones para desbloquear la evaluación.
+7. Responde la evaluación y obtén mínimo **70%**.
+8. El sistema habilita **Obtener certificado**.
+9. El certificado queda guardado en **Mis certificados** y puede verificarse mediante su código.
+
+### Contenidos
+
+La administración de contenidos permite asociar recursos externos a un curso (video, documento, imagen o enlace). Los recursos asociados aparecen dentro del detalle público del curso en **Recursos del curso**.
+
 ## 🚀 Ejecución
 
 1. Abre `index.html` con un navegador moderno.
@@ -122,7 +149,7 @@ El proyecto utiliza las siguientes claves de `LocalStorage`:
 
 **Autor:** Edwin Nicolas
 
-## Versión 4.0 — LMS Académico
+## Versión 4.0 — EDUNOVA Académico
 
 - Bootstrap seguro para crear el primer administrador.
 - Roles de administrador.
@@ -137,3 +164,10 @@ El proyecto utiliza las siguientes claves de `LocalStorage`:
 - Modo oscuro persistente y mejoras de accesibilidad.
 
 > Nota: esta versión sigue siendo local y utiliza LocalStorage/SessionStorage. Para producción se recomienda migrar autenticación, datos y archivos a una API + base de datos.
+
+
+## Mejoras de esta versión
+- Inscripciones normalizadas: no se cuentan cursos duplicados ni referencias a cursos inexistentes.
+- El estudiante puede salir de un curso desde su portal o desde el detalle público.
+- Al salir, se conservan progreso y calificaciones para una futura reinscripción.
+- Notificaciones con paleta específica para modo oscuro y mejor contraste.

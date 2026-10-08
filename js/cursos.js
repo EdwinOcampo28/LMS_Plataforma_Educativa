@@ -4,6 +4,8 @@ const guardar = (key, data) => LMS.save(key, data);
 let cursos = cargar('cursos');
 let modulos = cargar('modulos');
 let lecciones = cargar('lecciones');
+lecciones = lecciones.map((l,i)=>({...l,id:l.id||`LEC-LEGACY-${i}-${btoa(unescape(encodeURIComponent(l.cursoCodigo||''))).slice(0,8)}-${btoa(unescape(encodeURIComponent(l.titulo||''))).slice(0,8)}`}));
+guardar('lecciones', lecciones);
 let editandoCurso = null;
 let editandoModulo = null;
 let editandoLeccion = null;
@@ -47,7 +49,7 @@ function cargarCursosEnSelect() {
 function validarCurso(curso, index) {
   const codigoDuplicado = cursos.some((c, i) => LMS.normalize(c.codigo) === LMS.normalize(curso.codigo) && i !== index);
   if (codigoDuplicado) return 'Ya existe un curso con ese código.';
-  if (!curso.docenteCodigo || !curso.estudianteCodigo) return 'Selecciona un docente y un estudiante válidos.';
+  if (!curso.docenteCodigo) return 'Selecciona un docente válido.';
   return '';
 }
 
@@ -62,7 +64,7 @@ if (cursoForm) {
     const nuevoCurso = {
       codigo: codigo.value.trim(), nombre: nombre.value.trim(), descripcion: descripcion.value.trim(),
       docenteCodigo: docente.value, docenteNombre: docenteExiste?.nombre || '',
-      estudianteCodigo: estudiante.value, estudianteNombre: estudianteExiste?.nombre || '',
+      estudianteCodigo: estudiante.value || '', estudianteNombre: estudianteExiste?.nombre || '',
       duracion: duracion.value.trim(), etiquetas: etiquetas.value.trim(), estado: estado.value,
       categoria: categoria?.value || ''
     };
@@ -103,7 +105,7 @@ function renderCursos() {
   if (!visibles.length) { tablaCursos.innerHTML = `<tr><td colspan="9">${LMS.emptyState('No hay cursos registrados.')}</td></tr>`; return; }
   tablaCursos.innerHTML = visibles.map(({c, i}) => {
     const totalModulos = modulos.filter(m => m.cursoCodigo === c.codigo).length;
-    return `<tr><td>${LMS.escapeHTML(c.codigo)}</td><td><strong>${LMS.escapeHTML(c.nombre)}</strong><small>${LMS.escapeHTML(c.categoria || 'Sin categoría')}</small></td><td>${LMS.escapeHTML(c.docenteNombre)}</td><td>${LMS.escapeHTML(c.estudianteNombre)}</td><td>${LMS.escapeHTML(c.duracion || '—')}</td><td>${LMS.escapeHTML(c.etiquetas || '—')}</td><td><span class="badge ${c.estado === 'Activo' ? 'badge-success' : 'badge-muted'}">${LMS.escapeHTML(c.estado)}</span></td><td>${totalModulos}</td><td class="actions"><button class="btn-secondary" onclick="editarCurso(${i})">Editar</button><button class="btn-danger" onclick="eliminarCurso(${i})">Eliminar</button></td></tr>`;
+    return `<tr><td>${LMS.escapeHTML(c.codigo)}</td><td><strong>${LMS.escapeHTML(c.nombre)}</strong><small>${LMS.escapeHTML(c.categoria || 'Sin categoría')}</small></td><td>${LMS.escapeHTML(c.docenteNombre)}</td><td>${Object.values(LMS.load('inscripciones', {})).filter(list => Array.isArray(list) && list.includes(c.codigo)).length}</td><td>${LMS.escapeHTML(c.duracion || '—')}</td><td>${LMS.escapeHTML(c.etiquetas || '—')}</td><td><span class="badge ${c.estado === 'Activo' ? 'badge-success' : 'badge-muted'}">${LMS.escapeHTML(c.estado)}</span></td><td>${totalModulos}</td><td class="actions"><button class="btn-secondary" onclick="editarCurso(${i})">Editar</button><button class="btn-danger" onclick="eliminarCurso(${i})">Eliminar</button></td></tr>`;
   }).join('');
 }
 
@@ -152,7 +154,7 @@ if (cursoLeccion) cursoLeccion.addEventListener('change', () => {
 if (leccionForm) leccionForm.addEventListener('submit', event => {
   event.preventDefault(); const code = cursoLeccion.value; const mod = moduloLeccion.value; const title = titulo.value.trim(); const body = contenido.value.trim();
   if (!code || !mod || !title || !body) { LMS.notify('Completa curso, módulo, título y contenido.', 'error'); return; }
-  const item = { cursoCodigo: code, moduloNombre: mod, titulo: title, contenido: body };
+  const item = { id: editandoLeccion !== null ? (lecciones[editandoLeccion].id || `LEC-${Date.now()}-${Math.random().toString(36).slice(2,7)}`) : `LEC-${Date.now()}-${Math.random().toString(36).slice(2,7)}`, cursoCodigo: code, moduloNombre: mod, titulo: title, contenido: body };
   if (editandoLeccion !== null) { lecciones[editandoLeccion] = item; editandoLeccion = null; LMS.notify('Lección actualizada.'); } else { lecciones.push(item); LMS.notify('Lección creada.'); }
   guardar('lecciones', lecciones); leccionForm.reset(); moduloLeccion.innerHTML = '<option value="">Seleccionar módulo</option>'; renderLecciones(); renderModulos();
 });

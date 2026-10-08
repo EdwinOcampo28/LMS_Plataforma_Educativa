@@ -6,6 +6,8 @@ function cerrarSesion(event) {
   if (event && typeof event.preventDefault === 'function') event.preventDefault();
 
   try {
+    const active = JSON.parse(sessionStorage.getItem('usuarioActivo') || 'null');
+    if (window.LMSPro?.audit && active?.email) LMSPro.audit('CERRAR_SESION','administrativo',active.email);
     sessionStorage.removeItem('usuarioActivo');
   } catch (error) {
     console.warn('No se pudo limpiar la sesión administrativa:', error);

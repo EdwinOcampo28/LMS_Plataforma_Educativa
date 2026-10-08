@@ -1,7 +1,6 @@
-let admins = LMS.load('administrativos');
+let admins = LMS.load('administrativos', []);
 const form = document.getElementById('adminForm');
 const lista = document.getElementById('listaAdmins');
-let editIndex = -1;
 
 function render() {
   if (!lista) return;
@@ -10,14 +9,13 @@ function render() {
       <div>
         <span class="avatar">${LMS.escapeHTML((a.nombres || '?').charAt(0).toUpperCase())}</span>
         <div>
-          <strong>${LMS.escapeHTML(a.nombres)} ${LMS.escapeHTML(a.apellidos)}</strong>
-          <p>${LMS.escapeHTML(a.email)}</p>
-          <small>ID: ${LMS.escapeHTML(a.identificacion)} · Rol: Administrador</small>
+          <strong>${LMS.escapeHTML(a.nombres || '')} ${LMS.escapeHTML(a.apellidos || '')}</strong>
+          <p>${LMS.escapeHTML(a.email || '')}</p>
+          <small>ID: ${LMS.escapeHTML(a.identificacion || '')} · Rol: Administrador</small>
         </div>
       </div>
       <div class="actions">
-        <button class="btn-secondary" type="button" onclick="editar(${i})">Editar</button>
-        <button class="btn-danger" type="button" onclick="eliminar(${i})">Eliminar</button>
+        <button class="btn-danger" type="button" onclick="eliminar(${i})"><i class="fa-solid fa-trash"></i> Eliminar</button>
       </div>
     </li>`).join('') : LMS.emptyState('No hay administrativos registrados.');
 }
@@ -34,33 +32,23 @@ form?.addEventListener('submit', event => {
     LMS.notify('Completa todos los campos. La contraseña debe tener mínimo 6 caracteres.', 'error');
     return;
   }
-  if (admins.some((a, i) => a.identificacion === identificacion && i !== editIndex)) {
-    LMS.notify('Ya existe un administrativo con esa identificación.', 'warning'); return;
+  if (admins.some(a => a.identificacion === identificacion)) {
+    LMS.notify('Ya existe un administrador con esa identificación.', 'warning'); return;
   }
-  if (admins.some((a, i) => a.email?.toLowerCase() === email && i !== editIndex)) {
-    LMS.notify('Ya existe un administrativo con ese correo.', 'warning'); return;
+  if (admins.some(a => a.email?.toLowerCase() === email)) {
+    LMS.notify('Ya existe un administrador con ese correo.', 'warning'); return;
   }
 
   const admin = { identificacion, nombres, apellidos, email, password, role: 'admin', creadoEn: new Date().toISOString() };
-  const creandoPrimero = admins.length === 0 && editIndex < 0;
-  if (editIndex >= 0) {
-    admins[editIndex] = { ...admins[editIndex], ...admin };
-    editIndex = -1;
-    LMS.notify('Administrador actualizado.');
-  } else {
-    admins.push(admin);
-    LMS.notify(creandoPrimero ? 'Administrador inicial creado correctamente.' : 'Administrador creado.');
-  }
-
+  const creandoPrimero = admins.length === 0;
+  admins.push(admin);
   LMS.save('administrativos', admins);
   form.reset();
   render();
+  LMS.notify(creandoPrimero ? 'Administrador inicial creado correctamente.' : 'Administrador creado correctamente.', 'success');
 
   if (creandoPrimero && !sessionStorage.getItem('usuarioActivo')) {
-    setTimeout(() => {
-      LMS.notify('Ahora puedes iniciar sesión con tu nuevo administrador.');
-      window.location.href = '../index.html';
-    }, 800);
+    setTimeout(() => { window.location.href = '../index.html'; }, 900);
   }
 });
 
@@ -75,15 +63,11 @@ function eliminar(index) {
     LMS.notify('No puedes eliminar el administrador con el que estás conectado.', 'warning'); return;
   }
   LMS.confirmAction(`¿Eliminar a ${admin.nombres} ${admin.apellidos}?`, () => {
-    admins.splice(index, 1); LMS.save('administrativos', admins); render(); LMS.notify('Administrador eliminado.');
+    admins.splice(index, 1);
+    LMS.save('administrativos', admins);
+    render();
+    LMS.notify('Administrador eliminado correctamente.', 'success');
   });
-}
-
-function editar(index) {
-  const a = admins[index]; if (!a) return;
-  ['identificacion','nombres','apellidos','email','password'].forEach(id => document.getElementById(id).value = a[id] || '');
-  editIndex = index;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 render();

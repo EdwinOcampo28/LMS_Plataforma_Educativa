@@ -2,22 +2,80 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>LMS ABC - Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDUNOVA · Iniciar sesión</title>
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="center">
-<div class="card login">
-<h1>LMS ABC</h1>
-<p>Ingreso Administrativo</p>
-<form id="loginForm">
-<input type="email" id="email" placeholder="Email" required>
-<input type="password" id="password" placeholder="Contraseña" required>
-<button type="submit">Ingresar</button>
-</form>
-<p class="hint">Primero crea un usuario en Administrativos</p>
-<a href="pages/administrativos.html">Crear Administrativo</a><a class="studentPortalLink" href="estudiante.html">Entrar al Portal del Estudiante</a>
-</div>
-<script src="js/utils.js"></script>
+<body class="loginPage">
+<main class="loginShell">
+  <section class="loginVisual" aria-label="EDUNOVA">
+    <div class="loginOrb loginOrbOne"></div>
+    <div class="loginOrb loginOrbTwo"></div>
+    <div class="loginVisualContent">
+      <div class="loginBrandMark"><i class="fa-solid fa-graduation-cap"></i></div>
+      <span class="loginKicker">PLATAFORMA EDUCATIVA</span>
+      <h1>EDUNOVA</h1>
+      <p>Aprendizaje, gestión académica y seguimiento en un solo lugar.</p>
+      <div class="loginHighlights">
+        <span><i class="fa-solid fa-shield-halved"></i> Gestión segura</span>
+        <span><i class="fa-solid fa-chart-line"></i> Seguimiento académico</span>
+        <span><i class="fa-solid fa-award"></i> Certificación</span>
+      </div>
+    </div>
+    <div class="loginVisualFooter">EDUNOVA <span>·</span> Plataforma educativa</div>
+  </section>
+
+  <section class="loginPanel">
+    <div class="loginPanelHead">
+      <div class="loginMiniIcon"><i class="fa-solid fa-lock"></i></div>
+      <div>
+        <span class="loginKicker">ACCESO ADMINISTRATIVO</span>
+        <h2>Bienvenido de nuevo</h2>
+      </div>
+    </div>
+    <p class="loginLead">Ingresa tus credenciales para acceder al panel de administración.</p>
+
+    <form id="loginForm" class="loginForm" autocomplete="on">
+      <label for="email">Correo electrónico</label>
+      <div class="loginInput">
+        <i class="fa-regular fa-envelope"></i>
+        <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="username" required>
+      </div>
+
+      <label for="password">Contraseña</label>
+      <div class="loginInput">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+        <button type="button" class="passwordToggle" id="togglePassword" aria-label="Mostrar contraseña" title="Mostrar contraseña"><i class="fa-regular fa-eye"></i></button>
+      </div>
+
+      <button type="submit" class="loginSubmit"><span>Ingresar al panel</span><i class="fa-solid fa-arrow-right"></i></button>
+    </form>
+
+    <div class="loginDivider"><span>Accesos</span></div>
+    <div class="loginLinks">
+      <a href="pages/administrativos.html" class="loginSecondary"><i class="fa-solid fa-user-plus"></i><span><strong>Crear administrativo</strong><small>Configura una cuenta de acceso</small></span><i class="fa-solid fa-chevron-right arrow"></i></a>
+      <a href="estudiante.html" class="loginSecondary"><i class="fa-solid fa-user-graduate"></i><span><strong>Portal del estudiante</strong><small>Continúa tu aprendizaje</small></span><i class="fa-solid fa-chevron-right arrow"></i></a>
+    </div>
+    <p class="loginHint"><i class="fa-solid fa-circle-info"></i> El primer administrativo puede crearse desde el enlace superior.</p>
+  </section>
+</main>
+<script src="js/utils.js"></script><script src="js/pro.js"></script>
+<script src="js/demoData.js"></script>
 <script src="js/auth.js"></script>
+<script>
+  const togglePassword = document.getElementById('togglePassword');
+  const password = document.getElementById('password');
+  if (togglePassword && password) {
+    togglePassword.addEventListener('click', () => {
+      const show = password.type === 'password';
+      password.type = show ? 'text' : 'password';
+      togglePassword.innerHTML = `<i class="fa-regular ${show ? 'fa-eye-slash' : 'fa-eye'}"></i>`;
+      togglePassword.setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+      togglePassword.title = show ? 'Ocultar contraseña' : 'Mostrar contraseña';
+    });
+  }
+</script>
 </body>
 </html>

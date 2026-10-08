@@ -13,7 +13,7 @@
 
 <div class="sidebar">
 
-<h2>LMS</h2>
+<h2>EDUNOVA</h2>
 
 <a href="dashboard.html">Dashboard</a>
 <a href="pages/cursos.html">Cursos</a>
@@ -34,18 +34,22 @@
 
 <br>
 
-<button id="joinCourse">Unirme al curso</button>
+<div class="courseActions"><button id="joinCourse">Empezar curso</button><button id="leaveCourse" class="btn-danger" style="display:none"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir del curso</button><button id="courseEvaluation" class="btn-outline" style="display:none">Responder evaluación</button></div>
 
 <h2>Módulos</h2>
 
 <div id="progresoCurso"></div>
 <div id="modulos"></div>
+<div id="cursoEvaluacion" class="card" style="display:none"></div><section id="cursoRecursos" style="display:none"></section>
 
 </div>
 
+<div id="lessonViewer" class="modalBackdrop"></div>
+
 </div>
 
-<script src="js/utils.js"></script>
+<script src="js/utils.js"></script><script src="js/pro.js"></script>
+<script src="js/demoData.js"></script>
 <script src="js/cursoPublicoDetalle.js"></script>
 </body>
 </html>

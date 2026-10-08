@@ -65,7 +65,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <!-- GRAFICA -->
 
-<div class="card">
+<div class="card dashboardStatsCard">
 
 <h2>Estadísticas del Sistema</h2>
 
@@ -75,89 +75,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 
 <!-- CURSOS DISPONIBLES -->
-
-<div class="card quickAccess"><div><span class="eyebrow">ACCESO RÁPIDO</span><h2>Portal del Estudiante</h2><p class="hint">Consulta cursos, progreso, evaluaciones y certificados.</p></div><a class="btn-link" href="estudiante.html">Abrir portal <i class="fa-solid fa-arrow-right"></i></a></div>
-
-<div class="sectionHeader">
-<h2>Cursos Disponibles</h2>
-</div>
-
-<div class="courseGrid">
-
-
-<!-- CURSO IA -->
-
-<div class="courseCard" onclick="entrarCurso('ia')">
-
-<img class="courseImage"
-src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
-
-<div class="courseBody">
-
-<div class="courseTitle">Introducción a IA</div>
-<div class="courseTeacher">Tecnología</div>
-
-<p>
-Aprende cómo funciona la inteligencia artificial y sus aplicaciones.
-</p>
-
-<button onclick="unirseCurso(event,'ia','Introducción a IA')">
-Unirse al curso
-</button>
-
-</div>
-</div>
-
-
-<!-- CURSO LOGICA -->
-
-<div class="courseCard" onclick="entrarCurso('logica')">
-
-<img class="courseImage"
-src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d">
-
-<div class="courseBody">
-
-<div class="courseTitle">Lógica Matemática</div>
-<div class="courseTeacher">Matemáticas</div>
-
-<p>
-Desarrolla pensamiento lógico y resolución de problemas.
-</p>
-
-<button onclick="unirseCurso(event,'logica','Lógica Matemática')">
-Unirse al curso
-</button>
-
-</div>
-</div>
-
-
-<!-- CURSO INGLES -->
-
-<div class="courseCard" onclick="entrarCurso('ingles')">
-
-<img class="courseImage"
-src="https://images.unsplash.com/photo-1523240795612-9a054b0db644">
-
-<div class="courseBody">
-
-<div class="courseTitle">Inglés Básico</div>
-<div class="courseTeacher">Idiomas</div>
-
-<p>
-Aprende vocabulario y gramática básica para comenzar a hablar inglés.
-</p>
-
-<button onclick="unirseCurso(event,'ingles','Inglés Básico')">
-Unirse al curso
-</button>
-
-</div>
-</div>
-
-</div>
-
+<div class="sectionHeader"><h2>Cursos disponibles</h2></div>
 
 <!-- CURSOS DINAMICOS -->
 
@@ -205,14 +123,12 @@ Unirse al curso
 
 <!-- LIBRERIA GRAFICAS -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <!-- SCRIPT DASHBOARD -->
 
 <script src="js/utils.js"></script>
 <script src="js/logout.js"></script>
 <script src="js/authGuard.js"></script>
-<script src="js/dashboard.js"></script>
 <script src="js/pro.js"></script>
+<script src="js/dashboard.js"></script>
 <script src="js/nav.js"></script></body>
 </html>
